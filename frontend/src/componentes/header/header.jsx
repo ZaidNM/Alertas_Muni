@@ -12,13 +12,14 @@ export default function Header() {
       <nav className="nav">
         <ul className="nav-links">
           <li><a href="#home">Inicio</a></li>
-          <li><a href="#about">Acerca de</a></li>
-          <li><a href="#services">Servicios</a></li>
-          <li><a href="#contact">Contacto</a></li>
+          <li><a href="#reportes">Reportes</a></li>
+          <li><a href="#noticias">Noticias</a></li>
+          <li><a href="#destacados">Destacados</a></li>
+          <li><a href="#formularios">Formulario</a></li>
         </ul>
         <div className="auth-buttons">
           <button className="login">Iniciar Sesión</button>
-          <button className="register">Registrarse</button>
+          <button className="register">Regístrate</button>
         </div>
       </nav>
     </header>

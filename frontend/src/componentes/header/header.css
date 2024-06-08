@@ -1,6 +1,6 @@
-/* *{
+*{
     margin: 0;
-} */
+}
 .header {
     display: flex;
     align-items: center;
@@ -9,9 +9,9 @@
     color: white;
 }
 
-.logo img {
+.logo a img {
     height: 50px;
-    margin-right: 50px;
+    display: block;
 }
 
 .nav {
@@ -19,6 +19,7 @@
     align-items: center;
     flex-grow: 1;
     justify-content: space-between;
+    padding-left: 15px;
 }
 
 .nav-links {

@@ -1,0 +1,24 @@
+
+
+.tarjeta {
+    background-color: wheat;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: left;
+    width: 25%;
+    height: auto;
+}
+
+.tarjeta h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.tarjeta img {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+}
+
