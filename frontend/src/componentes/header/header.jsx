@@ -9,6 +9,10 @@ export default function Header() {
           <img src={Imagen} alt="Logo" />
         </a>
       </div>
+      <input type="checkbox" id='check'/>
+      <label htmlFor="check" className='mostrar-menu'>
+        &#8801;
+      </label>
       <nav className="nav">
         <ul className="nav-links">
           <li><a href="#home">Inicio</a></li>
@@ -21,6 +25,9 @@ export default function Header() {
           <button className="login">Iniciar Sesión</button>
           <button className="register">Regístrate</button>
         </div>
+        <label htmlFor="check" className='esconder-menu'>
+          &#215;
+        </label>
       </nav>
     </header>
   );
