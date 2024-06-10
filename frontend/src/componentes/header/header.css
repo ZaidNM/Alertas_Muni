@@ -46,13 +46,11 @@
     transition: 0.4s;
 }
 
-.auth-buttons {
+.auth-buttons{
     display: flex;
-    align-items: center;
 }
 
-.auth-buttons .login,
-.auth-buttons .register {
+.auth-buttons button{
     background-color: #0071BC;
     color: white;
     border: 1px solid white;
@@ -62,8 +60,7 @@
     cursor: pointer;
 }
 
-.auth-buttons .login:hover,
-.auth-buttons .register:hover {
+.auth-buttons button:hover {
     background-color: #FBFBCC;
     color: black;
     border: 1px solid black;
@@ -130,16 +127,22 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    .nav-links,
-    .auth-buttons{
-        display: block;
+    .nav-links{
+        display:flex;
+        flex-direction: column;
+        gap: 0.5vh;
     }
     .nav-links li{
         padding-bottom: 15px;
     }
+
+    .auth-buttons{
+        display: flex;
+        flex-direction: column;
+    }
     .auth-buttons button{
-        display: block;
-        margin: 10px;
+        margin: 1vh 0vh;
+        margin-left: 0;
     }
 
     .esconder-menu{

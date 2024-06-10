@@ -22,8 +22,8 @@ export default function Header() {
           <li><a href="#formularios">Formulario</a></li>
         </ul>
         <div className="auth-buttons">
-          <button className="login">Iniciar Sesión</button>
-          <button className="register">Regístrate</button>
+          <button >Iniciar Sesión</button>
+          <button >Regístrate</button>
         </div>
         <label htmlFor="check" className='esconder-menu'>
           &#215;
