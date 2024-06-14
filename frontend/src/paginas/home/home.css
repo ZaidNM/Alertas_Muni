@@ -25,24 +25,25 @@ main {
 .banner button {
     margin-bottom: 20px;
     padding: 10px 20px;
-    background-color: #007D4B;
+    background-color: #2D9596;
     border-radius: 10px;
-    color: #FBFBCC;
+    color: #ECF4D6;
     font-size: 20px;
     font-weight: bolder;
 }
 
 .banner button:hover {
-    background-color: #FBFBCC;
+    background-color: #ECF4D6;
     cursor: pointer;
-    color: #007D4B;
+    color: #2D9596;
+    transition: 0.5s;
 }
 
 /* Introduccion */
 .intro {
     display: block;
-    background-color: #FBFBCC;
-    padding-bottom: 30px;
+    background-color: #ECF4D6;
+    padding-bottom: 10vh;
 }
 
 .intro h1 {
@@ -57,22 +58,24 @@ main {
 }
 
 /* Destacados */
-.destacados{
+.destacados {
     display: block;
-    background-color: white;
+    background-color: #9AD0C2;
+    padding: 5vh 5vh;
 }
 
-.destacados h1{
+.destacados h1 {
     text-align: center;
-    padding-top: 20px;
+    padding-bottom: 5vh ;
 }
 
 /* Nosotros */
-.nosotros{
+.nosotros {
     display: block;
-    background-color: #FBFBCC;
-    padding-bottom: 30px;
+    background-color: #ECF4D6;
+    padding-bottom: 10vh;
 }
+
 .nosotros h1 {
     text-align: center;
     padding: 20px;
@@ -85,14 +88,15 @@ main {
 }
 
 /* Noticias */
-.noticias{
+.noticias {
     display: block;
-    background-color: white;
+    background-color: #9AD0C2;
+    padding: 5vh 5vh;
 }
 
-.noticias h1{
+.noticias h1 {
     text-align: center;
-    padding-top: 20px;
+    padding-bottom: 5vh;
 }
 
 /* Tarjetas */
@@ -101,5 +105,4 @@ main {
     flex-wrap: wrap;
     justify-content: center;
     gap: 5vh;
-    padding: 20px;
 }

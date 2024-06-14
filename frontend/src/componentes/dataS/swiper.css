@@ -1,0 +1,6 @@
+/* src/styles/SwiperComponent.css */
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

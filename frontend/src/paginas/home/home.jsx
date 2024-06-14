@@ -1,14 +1,21 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "../../componentes/header/header"
 import Footer from "../../componentes/footer/footer";
-import Card from "../../componentes/cards/cards"
-import ban from "../../assets/img/huanuco.jpg"
+import Registro from "../registro/registro"
+import P_Frecuentes from "../p-frecuentes/p-frecuentes";
+import SwiperComponent from "../../componentes/dataS/swiper";
+import Data_destacados from "../../componentes/dataS/dataDestacados";
+import Data_news from "../../componentes/dataS/dataNoticias";
 import './home.css'
+
+
 
 export default function Home() {
     return (
         <main>
             <Header />
+
             <section className="banner">
                 <button>Formulario</button>
             </section>
@@ -19,22 +26,10 @@ export default function Home() {
             </section>
 
             <section className="destacados">
+
                 <h1>Destacados</h1>
                 <article className="cont-tarjetas">
-                    <Card
-                        imgSrc={ban}
-                        title="Descubre nuestros servicios"
-                        description="Ofrecemos una amplia gama de soluciones para satisfacer todas tus necesidades. Explora nuestros servicios y encuentra la mejor opción para ti."
-                        link="#"
-                        linkText="Más información"
-                    />
-                    <Card
-                        imgSrc={ban}
-                        title="Descubre nuestros servicios"
-                        description="Ofrecemos una amplia gama de soluciones para satisfacer todas tus necesidades. Explora nuestros servicios y encuentra la mejor opción para ti."
-                        link="#"
-                        linkText="Más información"
-                    />
+                    <SwiperComponent data={Data_destacados} />
                 </article>
             </section>
 
@@ -46,25 +41,13 @@ export default function Home() {
             <section className="noticias">
                 <h1>Noticias</h1>
                 <article className="cont-tarjetas">
-                    <Card
-                        imgSrc={ban}
-                        title="Descubre nuestros servicios"
-                        description="Ofrecemos una amplia gama de soluciones para satisfacer todas tus necesidades. Explora nuestros servicios y encuentra la mejor opción para ti."
-                        link="#"
-                        linkText="Más información"
-                    />
-                    <Card
-                        imgSrc={ban}
-                        title="Descubre nuestros servicios"
-                        description="Ofrecemos una amplia gama de soluciones para satisfacer todas tus necesidades. Explora nuestros servicios y encuentra la mejor opción para ti."
-                        link="#"
-                        linkText="Más información"
-                    />
+                    <SwiperComponent data={Data_news} />
                 </article>
 
             </section>
 
             <Footer />
+
         </main>
     );
 }

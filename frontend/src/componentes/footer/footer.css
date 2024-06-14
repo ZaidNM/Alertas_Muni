@@ -1,23 +1,27 @@
-*{
+* {
     margin: 0;
     padding: 0;
     border: 0;
 }
-footer{
+
+footer {
     display: block;
-    background-color: black;
-    
+    background-color: #2D9596;
+
 }
+
 /*---------------------logo------------------------*/
-.logo{
+.logo {
     max-width: auto;
     max-height: 100px;
 }
-.logo img{
+
+.logo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 /*---------------------info-----------------------*/
 .info {
     display: grid;
@@ -26,11 +30,13 @@ footer{
     color: white;
     padding: 50PX 0px;
 }
-.info ul{
+
+.info ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
+
 /* .info li{
     padding-top: 25px;
 } */
@@ -38,39 +44,46 @@ footer{
     text-decoration: none;
     color: white;
 }
-.info a:hover{
+
+.info a:hover {
     text-decoration: underline;
 }
+
 /*--------------------------listas-----------------------*/
-.listas{
+.listas {
     display: flex;
     gap: 50px;
     margin-left: 200PX;
 }
-.listas h3{
+
+.listas h3 {
     padding-bottom: 20px;
     cursor: pointer;
 }
-.listas li{
+
+.listas li {
     padding-bottom: 10px;
 }
 
 /*-----------------------pie-----------------------*/
-.pie{
+.pie {
     display: flex;
     align-items: center;
     color: white;
     padding-bottom: 20PX;
-    
+
 }
-.pie a{
+
+.pie a {
     text-decoration: none;
     color: white;
 }
-.copyright{
+
+.copyright {
     margin-left: 20px;
 }
-.r-sociales{
+
+.r-sociales {
     display: flex;
     gap: 10px;
     margin-left: auto;
@@ -94,11 +107,13 @@ footer{
         max-width: 35vh;
         margin: 0 auto 20px;
     }
+
     .logo img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
+
     .listas {
 
         display: flex;

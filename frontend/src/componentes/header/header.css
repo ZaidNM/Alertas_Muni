@@ -1,11 +1,12 @@
-*{
+* {
     margin: 0;
 }
+
 .header {
     display: flex;
     align-items: center;
     padding: 10px 20px;
-    background-color: #0071BC;
+    background-color: #2D9596;
     gap: 10px;
 }
 
@@ -35,23 +36,23 @@
 }
 
 .nav-links li a {
-    color: #FBFBCC;
+    color: white;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;
 }
 
 .nav-links li a:hover {
-    color: #6ac2fc;
+    color: #FBFBCC;
     transition: 0.4s;
 }
 
-.auth-buttons{
+.auth-buttons {
     display: flex;
 }
 
-.auth-buttons button{
-    background-color: #0071BC;
+.auth-buttons button {
+    background-color: #2D9596;
     color: white;
     border: 1px solid white;
     border-radius: 20px;
@@ -61,15 +62,16 @@
 }
 
 .auth-buttons button:hover {
-    background-color: #FBFBCC;
+    background-color: #ECF4D6;
     color: black;
     border: 1px solid black;
     transition: 0.7s;
 }
 
+
 /* BOTONES DE MENU */
 .mostrar-menu,
-.esconder-menu{
+.esconder-menu {
     font-size: 30px;
     cursor: pointer;
     display: none;
@@ -77,34 +79,35 @@
     transition: 0.4s;
 }
 
-.mostrar-menu{
+.mostrar-menu {
     order: 1;
 }
 
 .mostrar-menu:hover,
-.esconder-menu:hover{
+.esconder-menu:hover {
     color: #6ac2fc;
     transition: 0.4s;
 }
 
-#check{
+#check {
     display: none;
 }
 
 /* RESPONSIVO */
 @media (max-width: 800px) {
+
     /* HEADER */
     .mostrar-menu,
-    .esconder-menu{
+    .esconder-menu {
         display: block;
         padding: 20px;
     }
 
-    .header{
+    .header {
         justify-content: space-between;
     }
 
-    .nav{
+    .nav {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -121,37 +124,40 @@
         z-index: 100;
         transition: 0.8s;
     }
+
     .logo a img {
         max-width: 150px;
         height: 80px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    .nav-links{
-        display:flex;
+    .nav-links {
+        display: flex;
         flex-direction: column;
         gap: 0.5vh;
     }
-    .nav-links li{
+
+    .nav-links li {
         padding-bottom: 15px;
     }
 
-    .auth-buttons{
+    .auth-buttons {
         display: flex;
         flex-direction: column;
     }
-    .auth-buttons button{
+
+    .auth-buttons button {
         margin: 1vh 0vh;
         margin-left: 0;
     }
 
-    .esconder-menu{
+    .esconder-menu {
         position: absolute;
         top: 40px;
         right: 100px;
     }
 
-    #check:checked ~ .nav{
+    #check:checked~.nav {
         right: 0;
     }
 
