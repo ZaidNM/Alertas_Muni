@@ -10,10 +10,7 @@ export default function Registro() {
                         Nombre:
                         <input type="text" name="nombre" required />
                     </label>
-                    <label>
-                        Apellido:
-                        <input type="text" name="apellido" required />
-                    </label>
+
                     <label>
                         Correo:
                         <input type="email" name="correo" required />
@@ -22,11 +19,15 @@ export default function Registro() {
                         DNI:
                         <input type="text" name="dni" required />
                     </label>
-                </div>
-                <div className="form-column">
                     <label>
                         Celular:
                         <input type="tel" name="celular" required />
+                    </label>
+                </div>
+                <div className="form-column">
+                    <label>
+                        Apellido:
+                        <input type="text" name="apellido" required />
                     </label>
                     <label>
                         Contraseña:

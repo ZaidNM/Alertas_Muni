@@ -1,5 +1,6 @@
 *{
     margin: 0;
+    font-family: Arial, sans-serif;
 }
 .register-container {
     display: flex;
@@ -10,6 +11,7 @@
     background-size: cover;
     background-position: center;
     background-attachment: fixed;/* Mantiene el fondo fijo al desplazarse */
+    padding: 20px;
 }
 
 /* Estilo del formulario */
