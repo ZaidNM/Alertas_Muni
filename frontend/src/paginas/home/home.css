@@ -22,23 +22,6 @@ main {
     background-position-y: 65%;
 }
 
-.banner button {
-    margin-bottom: 20px;
-    padding: 10px 20px;
-    background-color: #2D9596;
-    border-radius: 10px;
-    color: #ECF4D6;
-    font-size: 20px;
-    font-weight: bolder;
-}
-
-.banner button:hover {
-    background-color: #ECF4D6;
-    cursor: pointer;
-    color: #2D9596;
-    transition: 0.5s;
-}
-
 /* Introduccion */
 .intro {
     display: block;
@@ -49,6 +32,8 @@ main {
 .intro h1 {
     text-align: center;
     padding: 20px;
+    font-size: 5vh;
+    font-weight: 500;
 }
 
 .intro p {
@@ -67,6 +52,8 @@ main {
 .destacados h1 {
     text-align: center;
     padding-bottom: 5vh ;
+    font-size: 5vh;
+        font-weight: 500;
 }
 
 /* Nosotros */
@@ -79,6 +66,8 @@ main {
 .nosotros h1 {
     text-align: center;
     padding: 20px;
+    font-size: 5vh;
+        font-weight: 500;
 }
 
 .nosotros p {
@@ -97,6 +86,8 @@ main {
 .noticias h1 {
     text-align: center;
     padding-bottom: 5vh;
+    font-size: 5vh;
+    font-weight: 500;
 }
 
 /* Tarjetas */

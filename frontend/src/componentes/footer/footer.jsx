@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import './footer.css';
 import logo from '../../assets/img/log.jpeg';
 
@@ -18,18 +19,18 @@ export default function Footer() {
                     <div>
                         <h3>Enlaces</h3>
                         <ul>
-                            <li><a href="#">Inicio</a></li>
-                            <li><a href="#">Introducción</a></li>
-                            <li><a href="#">Destacados</a></li>
-                            <li><a href="#">Noticias</a></li>
+                            <li><Link to='/'>Inicio</Link></li>
+                            <li><Link to='/'>Introducción</Link></li>
+                            <li><Link to='/reportes'>Reportes</Link></li>
+                            <li><Link to='/noticias'>Noticias</Link></li>
                         </ul>
                     </div>
                     <div>
                         <h3>Ayuda</h3>
                         <ul>
-                            <li><a href="#">Preguntas Frecuentes</a></li>
-                            <li><a href="#">Política de Privacidad</a></li>
-                            <li><a href="#">Términos de Servicio</a></li>
+                            <li><Link to="/prfrecuentes">Preguntas Frecuentes</Link></li>
+                            <li><Link to='/'>Política de Privacidad</Link></li>
+                            <li><Link to='/'>Términos de Servicio</Link></li>
                         </ul>
                     </div>
                 </div>

@@ -17,14 +17,14 @@ export default function Header() {
       </label>
       <nav className="nav">
         <ul className="nav-links">
-          <li><a href="#home">Inicio</a></li>
-          <li><a href="#instrucciones">Instrucciones</a></li>
-          <li><a href="#noticias">Noticias</a></li>
-          <li><a href="#destacados">Destacados</a></li>
-          <li><a href="#formularios">Formulario</a></li>
+          <li><Link to="/">Inicio</Link></li>
+          <li><Link to="/">Instrucciones</Link></li>
+          <li><Link to="/noticias">Noticias</Link></li>
+          <li><Link to="/reportes">Reportes</Link></li>
+          <li><Link to="/noticias">Formulario</Link></li>
         </ul>
         <div className="auth-buttons">
-          <button >Iniciar Sesión</button>
+          <Link to="/"><button>Iniciar Sesión</button></Link>
           <Link to="/registro"><button>Registrate</button></Link>
         </div>
         <label htmlFor="check" className='esconder-menu'>

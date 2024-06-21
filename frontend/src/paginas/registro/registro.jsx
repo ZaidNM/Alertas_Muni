@@ -1,7 +1,15 @@
 import React from 'react';
+import {useNavigate} from 'react-router-dom'
 import './registro.css';
 
 export default function Registro() {
+
+    const navigate = useNavigate()
+    
+    const registroClick = () => {
+        navigate('/')
+    }
+
     return (
         <div className="register-container">
             <form className="register-form">
@@ -60,7 +68,7 @@ export default function Registro() {
                     </label>
                 </div>
                 <div className="form-full">
-                    <button type="button">Registrarse</button>
+                    <button type="button" onClick={registroClick} >Registrarse</button>
                 </div>
             </form>
         </div>

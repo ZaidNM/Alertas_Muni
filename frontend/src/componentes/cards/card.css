@@ -8,11 +8,27 @@
     width: 45vh;
     height: auto;
     margin-bottom: 5vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .tarjeta h2 {
     font-size: 1.5em;
+    font-weight: 500;
     margin-bottom: 10px;
+    padding-top: 2vh;
+}
+
+.tarjeta a {
+    text-align: right;
+    padding-top: 3vh;
+    font-size: 1em;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.tarjeta a:hover {
+    text-decoration: underline;
 }
 
 .tarjeta img {

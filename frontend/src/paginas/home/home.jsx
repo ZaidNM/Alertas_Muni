@@ -1,14 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "../../componentes/header/header"
 import Footer from "../../componentes/footer/footer";
-import Registro from "../registro/registro"
-import P_Frecuentes from "../p-frecuentes/p-frecuentes";
-import SwiperComponent from "../../componentes/dataS/swiper";
+import SwiperComponent from "../../componentes/swiper/swiper";
 import Data_destacados from "../../componentes/dataS/dataDestacados";
 import Data_news from "../../componentes/dataS/dataNoticias";
 import './home.css'
-
+import { Button } from "../../componentes/ui";
 
 
 export default function Home() {
@@ -17,7 +14,7 @@ export default function Home() {
             <Header />
 
             <section className="banner">
-                <button>Formulario</button>
+                <Button className="bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]">Formulario</Button>
             </section>
 
             <section className="intro">

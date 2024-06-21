@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigation, Pagination, A11y } from 'swiper/modules';
+import { Navigation, Pagination, A11y, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -10,7 +10,7 @@ import './swiper.css'
 const SwiperComponent = ({ data }) => {
     return (
         <Swiper
-            modules={[Navigation, Pagination, A11y]}
+            modules={[Navigation, Pagination, A11y, Autoplay]}
             spaceBetween={0}
             slidesPerView={1}
             navigation
@@ -29,6 +29,11 @@ const SwiperComponent = ({ data }) => {
                 }
             }
             }
+            autoplay={{
+                delay: 5000,
+                disableOnInteraction: false,
+                speed: 10000
+            }}
         >
             {data.map((item, index) => (
                 <SwiperSlide key={index}>
