@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    font-family: Verdana;
+}
+
+.form-container {
+    display: flex;
+    background: linear-gradient(135deg, #e0f7e9, #266f69);/* Fondo difuminado */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Estilo del formulario */
+.formulario {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    width: 100%;
+    padding: 2em;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente */
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo del encabezado */
+.formulario h2 {
+    margin-bottom: 1em;
+    font-size: 2em;
+    color: #2e7d32;
+    text-align: center;
+}
+
+/* Estilo de etiquetas y entradas */
+.formulario label {
+    margin-bottom: 1.5em;
+    font-size: 1.2em;
+    color: #2e7d32;
+}
+
+.formulario input,
+.formulario textarea {
+    width: 100%;
+    padding: 0.5em;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 0.5em;
+}
+
+/* Estilo específico para el grupo de entrada de ubicación */
+.ubicacion-input {
+    display: flex;
+    align-items: center;
+}
+
+.ubicacion-input input {
+    flex: 1;
+    margin-right: 10px;
+}
+
+/* Estilo del botón para seleccionar ubicación */
+.ubicacion-input button {
+    padding: 0.5em 1em;
+    font-size: 1em;
+    color: #fff;
+    background-color: #43a047;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.ubicacion-input button:hover {
+    background-color: #66bb6a;
+}
+
+/* Estilo del botón de envío */
+.formulario button {
+    padding: 0.7em 1.5em;
+    font-size: 1em;
+    color: #fff;
+    background-color: #2e7d32;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid black;
+    margin-top: 1em;
+}
+
+.formulario button:hover {
+    background-color: #388e3c;
+}
