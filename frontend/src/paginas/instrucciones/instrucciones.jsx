@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Imagen1 from '../../assets/img/paso1.png';
 import Imagen2 from '../../assets/img/paso2.png';
 import Imagen3 from '../../assets/img/paso3.png';
@@ -36,7 +37,7 @@ export default function Instrucciones() {
                     <img src={Imagen4} alt="Paso 4" />
                 </div>
                 <h2>PUEDE REALIZAR UN REPORTE DANDO CLICK EN EL SIGUIENTE BOTON</h2>
-                <button >Realizar un reporte</button>
+                <Link to='/formulario'><button >Realizar un reporte</button></Link>
             </div>
         </div>
     );

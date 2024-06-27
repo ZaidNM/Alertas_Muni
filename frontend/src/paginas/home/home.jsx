@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Header from "../../componentes/header/header"
 import Footer from "../../componentes/footer/footer";
 import SwiperComponent from "../../componentes/swiper/swiper";
@@ -13,8 +14,8 @@ export default function Home() {
         <main>
             <Header />
 
-            <section className="banner">
-                <Button className="bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]">Formulario</Button>
+            <section className="banner pb-5">
+                <Link to='/formulario'><Button className="bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]">Formulario</Button></Link>
             </section>
 
             <section className="intro">

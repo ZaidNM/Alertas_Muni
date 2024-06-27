@@ -9,6 +9,9 @@ import MuniAm from './paginas/Destacados/munis/MuniAm'
 import MuniPM from './paginas/Destacados/munis/MuniPM'
 import ScrollToTop from 'react-scroll-to-top';
 import AllNews from './paginas/News/AllNews'
+import Login from './paginas/login/login'
+import Instrucciones from './paginas/instrucciones/instrucciones'
+import Formulario from './paginas/formulario/formulario'
 
 export default function Rutas() {
     return (
@@ -17,6 +20,9 @@ export default function Rutas() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path='/registro' element={<Registro />} />
+                <Route path='/login' element={<Login />} />
+                <Route path='/instrucciones' element={<Instrucciones />} />
+                <Route path='/formulario' element={<Formulario />} />
                 <Route path="/prfrecuentes" element={<PrFrecuentes />} />
                 <Route path="/noticias" element={<NewsPage/>}/>
                 <Route path="/noticias/all-noticias" element={<AllNews />} />
@@ -25,10 +31,6 @@ export default function Rutas() {
                 <Route path="/reportes/amarillis" element={<MuniAm/>} />
                 <Route path="/destacados/pillco-marca" element={<MuniPM/>} />
                 <Route path='*' element={<div>404 Not Found</div>} />
-            {/*
-            <Route path="/formularios" element={<Formularios />} /> 
-            
-            */}
             </Routes>
         </Router>
 

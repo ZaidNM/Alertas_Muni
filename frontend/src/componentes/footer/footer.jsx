@@ -12,15 +12,15 @@ export default function Footer() {
                     <div>
                         <h3>Usuario</h3>
                         <ul>
-                            <li><a href="#">Iniciar Sesion</a></li>
-                            <li><a href="#">Registarse</a></li>
+                            <li><Link to='/login'>Iniciar Sesion</Link></li>
+                            <li><Link to='/registro'>Registarse</Link></li>
                         </ul>
                     </div>
                     <div>
                         <h3>Enlaces</h3>
                         <ul>
                             <li><Link to='/'>Inicio</Link></li>
-                            <li><Link to='/'>Introducción</Link></li>
+                            <li><Link to='/instrucciones'>Introducciones</Link></li>
                             <li><Link to='/reportes'>Reportes</Link></li>
                             <li><Link to='/noticias'>Noticias</Link></li>
                         </ul>
