@@ -29,7 +29,9 @@ export default function Rutas() {
                 <Route path="/reportes" element={<Destacados />}/>
                 <Route path="/reportes/huanuco" element={<MuniHco/>} />
                 <Route path="/reportes/amarillis" element={<MuniAm/>} />
-                <Route path="/destacados/pillco-marca" element={<MuniPM/>} />
+                <Route path="/destacados/pillco-marca" element={<MuniPM />} />
+                <Route path="/admin" element={<div>Holaaaa admi</div>} />
+                {/* <Route path="/home-admin" element={<Home />} /> */}
                 <Route path='*' element={<div>404 Not Found</div>} />
             </Routes>
         </Router>
