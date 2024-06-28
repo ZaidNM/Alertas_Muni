@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Header from "../../componentes/header/header"
-import Footer from "../../componentes/footer/footer";
-import SwiperComponent from "../../componentes/swiper/swiper";
-import Data_destacados from "../../componentes/dataS/dataDestacados";
-import Data_news from "../../componentes/dataS/dataNoticias";
+import Header from "../../../componentes/header/header"
+import Footer from "../../../componentes/footer/footer";
+import SwiperComponent from "../../../componentes/swiper/swiper";
+import Data_destacados from "../../../componentes/dataS/dataDestacados";
+import Data_news from "../../../componentes/dataS/dataNoticias";
 import './home.css'
-import { Button } from "../../componentes/ui";
+import { Button } from "../../../componentes/ui";
 
 
 export default function Home() {

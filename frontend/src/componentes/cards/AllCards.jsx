@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Card from './cards'; // Asegúrate de importar correctamente el componente Card
+import Card from './cards';
 
 export default function AllCards({ data }) {
   const [currentPage, setCurrentPage] = useState(1);

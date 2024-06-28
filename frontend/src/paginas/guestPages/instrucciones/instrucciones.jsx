@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Imagen1 from '../../assets/img/paso1.png';
-import Imagen2 from '../../assets/img/paso2.png';
-import Imagen3 from '../../assets/img/paso3.png';
-import Imagen4 from '../../assets/img/paso4.png';
+import Imagen1 from '../../../assets/img/paso1.png';
+import Imagen2 from '../../../assets/img/paso2.png';
+import Imagen3 from '../../../assets/img/paso3.png';
+import Imagen4 from '../../../assets/img/paso4.png';
 // import Formulario from '../formulario/formulario';
 import './instrucciones.css';
 

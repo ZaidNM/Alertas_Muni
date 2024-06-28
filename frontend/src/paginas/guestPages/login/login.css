@@ -1,13 +1,14 @@
-*{
+* {
     margin: 0;
     font-family: Arial, sans-serif;
 }
-.register-container {
+
+.login-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: url('../../assets/img/fondo-registro.jpg');
+    background-image: url('../../../assets/img/fondo-login.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;/* Mantiene el fondo fijo al desplazarse */
@@ -15,32 +16,35 @@
 }
 
 /* Estilo del formulario */
-.register-form {
+.login-form {
     display: flex;
-    flex-wrap: wrap;
-    max-width: 800px;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
+    width: 100%;
     padding: 2em;
-    background-color: rgba(255, 255, 255, 0.8);/* Fondo blanco semitransparente */
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.9);/* Fondo blanco semitransparente */
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Columnas del formulario */
-.form-column {
-    flex: 1;
-    min-width: 300px;
-    padding: 0 1em;
+/* Estilo del encabezado */
+.login-form h2 {
+    margin-bottom: 1em;
+    font-size: 2em;
+    color: #333;
 }
 
 /* Estilo de etiquetas y entradas */
-.form-column label {
+.login-form label {
     display: block;
+    width: 100%;
     margin-bottom: 1em;
     font-size: 1.2em;
+    color: #333;
 }
 
-.form-column input,
-.form-column select {
+.login-form input {
     width: 100%;
     padding: 0.5em;
     font-size: 1em;
@@ -48,25 +52,8 @@
     border-radius: 4px;
 }
 
-/* Estilo de la fecha de nacimiento */
-.birth-date {
-    display: flex;
-    justify-content: space-between;
-}
-
-.birth-date select {
-    width: 32%;
-}
-
-/* Contenedor para el botón de registro */
-.form-full {
-    width: 100%;
-    text-align: center;
-    margin-top: 1em;
-}
-
-/* Estilo del botón de registro */
-.register-form button {
+/* Contenedor para el botón de inicio de sesión */
+.login-form button {
     padding: 0.7em 1.5em;
     font-size: 1em;
     color: #fff;
@@ -77,9 +64,10 @@
     cursor: pointer;
     border: 2px solid black;
     /* Contorno negro */
+    margin-top: 1em;
 }
 
-.register-form button:hover {
+.login-form button:hover {
     background-color: #64b5f6;
     /* Tonalidad más clara de celeste */
 }

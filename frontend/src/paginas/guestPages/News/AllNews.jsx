@@ -1,8 +1,8 @@
 import React from 'react'
-import DataAllNews from '../../componentes/dataS/newsMuni/DataAllNews'
-import Header from '../../componentes/header/header'
-import AllCards from '../../componentes/cards/AllCards'
-import Footer from '../../componentes/footer/footer'
+import DataAllNews from '../../../componentes/dataS/newsMuni/DataAllNews'
+import Header from '../../../componentes/header/header'
+import AllCards from '../../../componentes/cards/AllCards'
+import Footer from '../../../componentes/footer/footer'
 
 export default function AllNews() {
     return (

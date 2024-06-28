@@ -4,6 +4,7 @@ import cors from 'cors';
 
 import userRoutes from './routes/user.routes.js';
 import verifRoutes from './routes/verificar.routes.js';
+import captRoutes from './routes/capt.routes.js';
 
 const app = express()
 app.use(express.json())
@@ -12,7 +13,7 @@ app.use(cors({
     origin:'http://localhost:5173'
 }));
 
-app.use(userRoutes, verifRoutes);
+app.use(userRoutes, verifRoutes, captRoutes);
 
 app.listen(PORT)
 console.log(`server ejecutandose en el puerto ${PORT}`)

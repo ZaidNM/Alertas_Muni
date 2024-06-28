@@ -1,13 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Header from '../../componentes/header/header'
-import Footer from '../../componentes/footer/footer'
-import Data_news from '../../componentes/dataS/dataNoticias'
-import SwiperComponent from '../../componentes/swiper/swiper'
-import f_news from '../../assets/img/fondo-news.png'
+import Header from '../../../componentes/header/header'
+import Footer from '../../../componentes/footer/footer'
+import Data_news from '../../../componentes/dataS/dataNoticias'
+import SwiperComponent from '../../../componentes/swiper/swiper'
+import f_news from '../../../assets/img/fondo-news.png'
 import dataImgNew from './NewImg'
-import SwiperImg from '../../componentes/swiper/swiperImg'
-import { Button } from '../../componentes/ui'
+import SwiperImg from '../../../componentes/swiper/swiperImg'
+import { Button } from '../../../componentes/ui'
 
 
 export default function NewsPage() {

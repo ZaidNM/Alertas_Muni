@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useUsers } from '../../context/UsersContext';
+import { useUsers } from '../../../context/UsersContext';
 import './registro.css';
 import * as Yup from 'yup';
 

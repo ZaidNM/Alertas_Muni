@@ -1,8 +1,8 @@
 import React from 'react'
-import Header from '../../componentes/header/header'
-import Footer from '../../componentes/footer/footer'
-import banPr from '../../assets/img/preguntas.png'
-import dataPrFre from '../../componentes/dataS/dataPrFre'
+import Header from '../../../componentes/header/header'
+import Footer from '../../../componentes/footer/footer'
+import banPr from '../../../assets/img/preguntas.png'
+import dataPrFre from '../../../componentes/dataS/dataPrFre'
 
 
 const Pregunta = ({ pregunta, respuesta }) => (

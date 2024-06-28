@@ -1,6 +1,6 @@
-import img1 from '../../assets/img/fondo-registro.jpg';
-import img2 from '../../assets/img/huanuco.jpg';
-import img3 from '../../assets/img/log.jpeg';
+import img1 from '../../../assets/img/fondo-registro.jpg';
+import img2 from '../../../assets/img/huanuco.jpg';
+import img3 from '../../../assets/img/log.jpeg';
 
 const dataImgNew = [
     {

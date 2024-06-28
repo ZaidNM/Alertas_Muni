@@ -5,12 +5,14 @@ import {
     authenticateUserRequest,
     authenticateAdminRequest,
     authenticateEmailsRequest,
-} from "../../api/verif.api.js"; // Importar las funciones de la API
+} from "../../../api/verif.api.js"; // Importar las funciones de la API
 import { useNavigate } from "react-router-dom";
+import { useLogin } from "../../../context/LoginContext.jsx";
 import "./login.css";
 
 const Login = () => {
     const navigate = useNavigate();
+    const { login, setLogin } = useLogin();
     const [task, setTask] = useState({
         correo: "",
         contrasena: "",
@@ -33,21 +35,37 @@ const Login = () => {
     const handleSubmit = async (values, { setSubmitting, setErrors }) => {
         try {
             const isAdmin = adminEmails.includes(values.correo);
-            console.log("is admin:",isAdmin)
+            console.log("is admin:", isAdmin)
 
             let response;
             if (isAdmin) {
                 response = await authenticateAdminRequest(values);
+                console.log("Este es el reponse: ",response)
+                const adminData = { 
+                    nombre: response.data.admin.nomAdmin, 
+                    apellido: response.data.admin.apeAdmin,
+                    isAdmin: true
+                };
+                setLogin(adminData);
+                console.log("Estos son los datos: ",adminData)
             } else {
                 response = await authenticateUserRequest(values);
+                console.log("Este es el reponse: ", response)
+                const adminData = {
+                    nombre: response.data.user.nomUser,
+                    apellido: response.data.user.apeUser,
+                    isAdmin: false
+                };
+                setLogin(adminData);
+                console.log("Estos son los datos: ", adminData)
             }
 
             if (isAdmin) {
-                navigate("/admin");
+                navigate("/admin/home");
             } else {
-                navigate("/");
+                navigate("/user/home");
             }
-            const {data}= response
+
         } catch (error) {
             console.error("Error en handleSubmit:", error);
             setErrors({ submit: "Correo o contraseña incorrectos" });

@@ -17,7 +17,7 @@ main {
     text-align: center;
     position: relative;
     height: 70vh !important;
-    background: url(../../assets/img/banner.png);
+    background: url(../../../assets/img/banner.png);
     background-size: cover;
     background-position-y: 65%;
 }
