@@ -32,6 +32,7 @@ export default function AllCards({ data }) {
                 link={dat.link}
                 linkText={dat.linkText}
               />
+              
             </div>
           ))}
         </div>

@@ -6,7 +6,7 @@ import {useLogin} from '../../context/LoginContext.jsx';
 export default function HeaderAdmi() {
 
     const {login} = useLogin();
-    console.log("Los datos que llegaron",login)
+    //console.log("Los datos que llegaron",login)
 
     return (
         <header className="flex items-center py-2 px-4 bg-[#2D9596] gap-2">

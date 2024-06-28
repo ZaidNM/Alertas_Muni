@@ -13,7 +13,7 @@ export default function AllUser() {
 
             <h1 className='text-center text-3xl text-[#2D9596] uppercase pt-10 font-medium '>Usuarios Registrados</h1>
 
-            <AllCardsUser  />
+            <AllCardsUser/>
 
             <Footer />
         </main>

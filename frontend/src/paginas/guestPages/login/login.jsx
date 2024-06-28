@@ -7,8 +7,9 @@ import {
     authenticateEmailsRequest,
 } from "../../../api/verif.api.js"; // Importar las funciones de la API
 import { useNavigate } from "react-router-dom";
-import { useLogin } from "../../../context/LoginContext.jsx";
+import { useLogin } from "../../../context/LoginContext.jsx";//
 import "./login.css";
+import img_f from '../../../assets/img/huanuco.jpg';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Login = () => {
             try {
                 const response = await authenticateEmailsRequest();
                 setAdminEmails(response.data);
-                console.log(response.data)
+                //console.log(response.data)
             } catch (error) {
                 console.error("Error al obtener correos de administradores:", error);
             }
@@ -82,27 +83,28 @@ const Login = () => {
     });
 
     return (
-        <div className="login-container">
+        <div className="login-container relative flex items-center justify-center h-screen bg-cover bg-center" style={{ backgroundImage: `url(${img_f})`, backgroundSize: "cover", backgroundPosition: "0% 10%" }}>
+            <div className="absolute inset-0 bg-black opacity-50"></div>
             <Formik
                 initialValues={task}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
                 {({ isSubmitting, errors, touched }) => (
-                    <Form className="login-form">
+                    <Form className="login-form relative">
                         <h2>Iniciar Sesión</h2>
                         <label>
                             Correo:
                             <Field type="email" name="correo" required />
                             {errors.correo && touched.correo && (
-                                <div className="error">{errors.correo}</div>
+                                <div className="error text-red-500 text-justify font-semibold">{errors.correo}</div>
                             )}
                         </label>
                         <label>
                             Contraseña:
                             <Field type="password" name="contrasena" required />
                             {errors.contrasena && touched.contrasena && (
-                                <div className="error">{errors.contrasena}</div>
+                                <div className="error text-red-500 text-justify font-semibold">{errors.contrasena}</div>
                             )}
                         </label>
                         <button type="submit" disabled={isSubmitting}>

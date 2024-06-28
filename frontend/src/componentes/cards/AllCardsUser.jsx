@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import CardUser from './CardUser.jsx';
 import { useCap } from '../../context/CapContext.jsx';
+import Button from '../ui/Button.tsx';
 
 export default function AllCardsUser() {
-    const { caps, capLoadUsers} = useCap();
+    const { caps, capLoadUsers } = useCap();
     const [currentPage, setCurrentPage] = useState(1); // Estado para la página actual
     const cardsPerPage = 6; // 3 cards por fila, 2 filas = 6 cards por página
 
@@ -28,13 +29,15 @@ export default function AllCardsUser() {
     return (
         <main className="container mx-auto py-8">
             <section className="max-w-screen-lg mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
                     {currentCards.map((cap, index) => (
-                        <div key={index} className="flex justify-center">
+                        <div key={index} className=" justify-center text-center text-2xl text-[#2D9596] uppercase font-medium bg-[#ECF4D6] rounded-lg shadow-md p-5 max-w-full w-[45vh] h-auto mb-20">
                             <CardUser
                                 nombre={cap.nomUser}
                                 apellido={cap.apeUser}
                             />
+                            <Button className="mx-2 bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]" >Editar</Button>
+                            <Button className="bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]">Eliminar</Button>
                         </div>
                     ))}
                 </div>
