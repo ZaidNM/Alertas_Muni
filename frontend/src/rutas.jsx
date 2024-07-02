@@ -15,7 +15,9 @@ import Formulario from './paginas/userPages/formulario/formulario'
 
 import HomeAdmin from './paginas/adminPages/HomeAdmin';
 import AllUser from './paginas/adminPages/AllUser';
+import AllAdmin from './paginas/adminPages/AllAdmin'
 import HomeUser from './paginas/userPages/HomeUser'
+import RegistroAdmin from './paginas/adminPages/ResgistroAdmin'
 
 export default function Rutas() {
     return (
@@ -34,8 +36,11 @@ export default function Rutas() {
                 <Route path="/reportes/huanuco" element={<MuniHco />} />
                 <Route path="/reportes/amarillis" element={<MuniAm />} />
                 <Route path="/destacados/pillco-marca" element={<MuniPM />} />
+
                 <Route path="/admin/home" element={<HomeAdmin />} />
                 <Route path="/admin/all-user" element={<AllUser />} />
+                <Route path="/admin/all-admin" element={<AllAdmin />} />
+                <Route path="/admin/registro" element={<RegistroAdmin />} />
 
                 <Route path="/user/home" element={<HomeUser />} />
 

@@ -33,7 +33,7 @@ export default function HomeAdmin() {
                         <img src={img} alt="Usuarios" className="h-32 w-32 rounded-full shadow-lg bg-[#ECF4D6]" />
                         <p className="mt-4 text-lg font-semibold text-center">Usuarios</p>
                     </Link>
-                    <Link to="/" className="flex flex-col items-center">
+                    <Link to="/admin/all-admin" className="flex flex-col items-center">
                         <img src={img} alt="Adminis" className="h-32 w-32 rounded-full shadow-lg bg-[#ECF4D6]" />
                         <p className="mt-4 text-lg font-semibold text-center">Administradores</p>
                     </Link>

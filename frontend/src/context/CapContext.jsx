@@ -1,5 +1,5 @@
 import { createContext, useContext, useState,useEffect } from 'react';
-import { captUsersRequest } from '../api/capt.api';
+import { captUsersRequest,captAdminsRequest } from '../api/capt.api';
 
 export const CapContext = createContext();
 
@@ -25,12 +25,22 @@ export const CapProvider = ({ children }) => {
         }
     }
 
+    const capLoadAdmin = async () => {
+        try {
+            const response = await captAdminsRequest();
+            setCaps(response.data);
+            //console.log("Datos recibidos desde la API:", response.data); // Verificar datos aquí
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         capLoadUsers();
     }, []);
 
     return (
-        <CapContext.Provider value={{ caps, setCaps, capLoadUsers }}>
+        <CapContext.Provider value={{ caps, setCaps, capLoadUsers,capLoadAdmin }}>
             {children}
         </CapContext.Provider>
     );
