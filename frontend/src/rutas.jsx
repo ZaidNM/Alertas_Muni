@@ -18,6 +18,7 @@ import AllUser from './paginas/adminPages/AllUser';
 import AllAdmin from './paginas/adminPages/AllAdmin'
 import HomeUser from './paginas/userPages/HomeUser'
 import RegistroAdmin from './paginas/adminPages/ResgistroAdmin'
+import {RoutesAdmin,RoutesUser} from './ProtectedRoutes.jsx';
 
 export default function Rutas() {
     return (
@@ -37,12 +38,16 @@ export default function Rutas() {
                 <Route path="/reportes/amarillis" element={<MuniAm />} />
                 <Route path="/destacados/pillco-marca" element={<MuniPM />} />
 
+                <Route element={<RoutesAdmin/>}>
                 <Route path="/admin/home" element={<HomeAdmin />} />
                 <Route path="/admin/all-user" element={<AllUser />} />
                 <Route path="/admin/all-admin" element={<AllAdmin />} />
                 <Route path="/admin/registro" element={<RegistroAdmin />} />
+                </Route>
 
+                <Route element={<RoutesUser/>}>
                 <Route path="/user/home" element={<HomeUser />} />
+                </Route>
 
                 <Route path='*' element={<div>404 Not Found</div>} />
             </Routes>

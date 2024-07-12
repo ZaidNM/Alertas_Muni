@@ -3,6 +3,7 @@ import { PORT } from './config.js';
 import cors from 'cors';
 
 import userRoutes from './routes/user.routes.js';
+import adminRoutes from './routes/Admin.routes.js';
 import verifRoutes from './routes/verificar.routes.js';
 import captRoutes from './routes/capt.routes.js';
 
@@ -13,7 +14,7 @@ app.use(cors({
     origin:'http://localhost:5173'
 }));
 
-app.use(userRoutes, verifRoutes, captRoutes);
+app.use(userRoutes, verifRoutes, captRoutes,adminRoutes);
 
 app.listen(PORT)
 console.log(`server ejecutandose en el puerto ${PORT}`)

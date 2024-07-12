@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useUsers } from '../../context/UsersContext';
+import { useAdmins } from '../../context/AdminContext';
 import * as Yup from 'yup';
 import imgF from '../../assets/img/fondo-registro.jpg';
 
 const RegistroAdmin = () => {
     const navigate = useNavigate();
-    const { createUser, updateUser, getUser } = useUsers();
-    const { id } = useParams();
+    const { createAdmin, updateAdmin, getAdmin } = useAdmins();
+    const { id } = useParams()
 
     const initialValues = {
         nombre: '',
@@ -19,34 +19,36 @@ const RegistroAdmin = () => {
         contrasena: '',
         dia: '',
         mes: '',
-        ano: ''
+        ano: '',
+        tipoAdmin:''
     };
 
     const [formData, setFormData] = useState(initialValues);
 
     useEffect(() => {
-        const loadUser = async () => {
+        const loadAdmin = async () => {
             if (id) {
                 try {
-                    const user = await getUser(id);
+                    const admin = await getAdmin(id);
                     setFormData({
-                        nombre: user.nomUser || '',
-                        apellido: user.apeUser || '',
-                        dni: user.dniUser || '',
-                        correo: user.correoUser || '',
-                        contrasena: user.contraUser || '',
-                        celular: user.celUser || '',
-                        dia: user.bornUser ? user.bornUser.split('-')[2] : '',
-                        mes: user.bornUser ? user.bornUser.split('-')[1] : '',
-                        ano: user.bornUser ? user.bornUser.split('-')[0] : ''
+                        nombre: admin.nomAdmin || '',
+                        apellido: admin.apeAdmin || '',
+                        dni: admin.dniAdmin || '',
+                        correo: admin.correoAdmin || '',
+                        contrasena: admin.contraAdmin || '',
+                        celular: admin.celAdmin || '',
+                        dia: admin.bornAdmin ? admin.bornAdmin.split('-')[2] : '',
+                        mes: admin.bornAdmin ? admin.bornAdmin.split('-')[1] : '',
+                        ano: admin.bornAdmin ? admin.bornAdmin.split('-')[0] : '',
+                        tipoAdmin: admin.typeAdmin || ''
                     });
                 } catch (error) {
-                    console.error('Error al cargar usuario:', error);
+                    console.error('Error al cargar admin:', error);
                 }
             }
         };
-        loadUser();
-    }, [id, getUser]);
+        loadAdmin();
+    }, [id, getAdmin]);
 
     const validationSchema = Yup.object().shape({
         nombre: Yup.string().required('Nombre es requerido'),
@@ -63,19 +65,20 @@ const RegistroAdmin = () => {
             .required('Contraseña es requerida'),
         dia: Yup.string().required('Día es requerido'),
         mes: Yup.string().required('Mes es requerido'),
-        ano: Yup.string().required('Año es requerido')
+        ano: Yup.string().required('Año es requerido'),
+        tipoAdmin: Yup.string().required('Tipo de administrado es requerido')
     });
 
     const handleSubmit = async (values, actions) => {
         try {
             if (id) {
-                await updateUser(id, values);
-                console.log("Usuario actualizado");
+                await updateAdmin(id, values);
+                console.log("Admin actualizado");
             } else {
-                await createUser(values);
-                console.log("Usuario creado");
+                await createAdmin(values);
+                console.log("Admin creado");
             }
-            navigate('/'); // Redirige después del registro exitoso
+            navigate('/admin/all-admin'); // Redirige después del registro exitoso
         } catch (error) {
             console.error('Error al registrar usuario:', error);
         }
@@ -150,6 +153,13 @@ const RegistroAdmin = () => {
                                 {errors.dia && touched.dia && <div className="text-red-500 font-semibold py-2">{errors.dia}</div>}
                                 {errors.mes && touched.mes && <div className="text-red-500 font-semibold">{errors.mes}</div>}
                                 {errors.ano && touched.ano && <div className="text-red-500 font-semibold py-2">{errors.ano}</div>}
+                            </label>
+                            <label className="block mb-4">
+                                Tipo de Administrador:
+                                <Field as="select" name="tipoAdmin" required className="w-full mt-1 p-2 border rounded">
+                                    <option value="basico">básico</option>
+                                    <option value="superior">superior</option>
+                                </Field>
                             </label>
                         </div>
                         <div className="w-full text-center mt-4">

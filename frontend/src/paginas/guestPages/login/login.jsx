@@ -48,17 +48,19 @@ const Login = () => {
                     isAdmin: true
                 };
                 setLogin(adminData);
+                localStorage.setItem('login', JSON.stringify(adminData));
                 console.log("Estos son los datos: ",adminData)
             } else {
                 response = await authenticateUserRequest(values);
                 console.log("Este es el reponse: ", response)
-                const adminData = {
+                const userData = {
                     nombre: response.data.user.nomUser,
                     apellido: response.data.user.apeUser,
                     isAdmin: false
                 };
-                setLogin(adminData);
-                console.log("Estos son los datos: ", adminData)
+                setLogin(userData);
+                localStorage.setItem('login', JSON.stringify(userData));
+                console.log("Estos son los datos: ", userData)
             }
 
             if (isAdmin) {

@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import Imagen from '../../assets/img/logo.jpg';
 import { useLogin } from '../../context/LoginContext.jsx';
 
 export default function HeaderUSer() {
 
-    const { login } = useLogin();
-    console.log("Los datos que llegaron", login)
+    const { login, logout } = useLogin();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/'); //redirige al cerrar sesion
+    };
 
     return (
         <header className="flex items-center py-2 px-4 bg-[#2D9596] gap-2">
@@ -38,11 +43,12 @@ export default function HeaderUSer() {
                     </li>
                 </ul>
                 <div className="flex flex-col items-center mt-8 md:flex-row md:mt-0">
-                    <div className="bg-[#ECF4D6] p-2 rounded-lg flex items-center space-x-8">
+                    <div className="bg-[#ECF4D6] p-2 pl-5 rounded-lg flex items-center space-x-10">
                         <img src={Imagen} alt="User" className="h-12 w-12 rounded-full" />
                         <div>
                             <h1 className="text-lg font-semibold">{login ? `${login.nombre} ${login.apellido}` : "*********"}</h1>
-                            <h3 className="text-xs">Usuario</h3>
+                            <h3 className="text-sm">Usuario</h3>
+                            <button className="text-red-600 hover:text-red-800 text-sm" onClick={handleLogout}>Cerrar sesión</button>
                         </div>
                     </div>
                 </div>
