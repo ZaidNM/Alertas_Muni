@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import CardUser from './CardUser.jsx';
+import { useNavigate } from 'react-router-dom';
+import CardAdmin from './CardAdmin.jsx';
 import { useCap } from '../../context/CapContext.jsx';
 import Button from '../ui/Button.tsx';
-import CardAdmin from './CardAdmin.jsx';
+import {useAdmins} from '../../context/AdminContext.jsx';
 
-export default function AllCardsUser() {
+export default function AllCardsAdmin() {
     const { caps, capLoadAdmin } = useCap();
     const [currentPage, setCurrentPage] = useState(1); // Estado para la página actual
     const cardsPerPage = 6; // 3 cards por fila, 2 filas = 6 cards por página
@@ -27,6 +28,14 @@ export default function AllCardsUser() {
         setCurrentPage(pageNumber);
     };
 
+    const { login, deleteAdmin, updateAdmin } = useAdmins();
+    const navigate = useNavigate();
+
+    //Eliminar admin
+    const handleDelete = (idAdmin) => {
+        deleteAdmin(idAdmin);
+    };
+
     return (
         <main className="container mx-auto py-8">
             <section className="max-w-screen-lg mx-auto">
@@ -37,8 +46,8 @@ export default function AllCardsUser() {
                                 nombre={cap.nomAdmin}
                                 apellido={cap.apeAdmin}
                             />
-                            <Button className="mx-2 bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]" >Editar</Button>
-                            <Button className="bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]">Eliminar</Button>
+                            <Button className="mx-2 bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]" onClick={() => navigate(`/admin/edit-admin/${cap.idAdmin}`)}>Editar</Button>
+                            <Button className="bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]" onClick={() => handleDelete(cap.idAdmin)}>Eliminar</Button>
                         </div>
                     ))}
                 </div>

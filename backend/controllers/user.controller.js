@@ -3,7 +3,7 @@ import { pool } from "../db.js"; // Ajusta la ruta según la estructura de tu pr
 // OBTENER UN USUARIO
 export const getUser = async (req, res) => {
     try {
-        const [result] = await pool.query('SELECT * FROM usuarios WHERE id = ?', [req.params.id]);
+        const [result] = await pool.query('SELECT * FROM usuarios WHERE idUser = ?', [req.params.id]);
 
         if (result.length === 0) {
             return res.status(404).json({ message: "Usuario no encontrado" });
@@ -55,10 +55,12 @@ export const createUser = async (req, res) => {
 // ACTUALIZAR USUARIO
 export const updateUser = async (req, res) => {
     try {
-        const { nomUser, apeUser, dniUser, correoUser, contraUser, bornUser, celUser } = req.body;
+        const { nombre, apellido, dni, correo, contrasena, dia, mes, ano, celular } = req.body;
+        const bornUser = `${ano}-${mes}-${dia}`;
+        //console.log(req.body)
         const [result] = await pool.query(
-            'UPDATE usuarios SET nomUser = ?, apeUser = ?, dniUser = ?, correoUser = ?, contraUser = ?, bornUser = ?, celUser = ? WHERE id = ?',
-            [nomUser, apeUser, dniUser, correoUser, contraUser, bornUser, celUser, req.params.id]
+            'UPDATE usuarios SET nomUser = ?, apeUser = ?, dniUser = ?, correoUser = ?, contraUser = ?, bornUser = ?, celUser = ? WHERE idUser = ?',
+            [nombre, apellido, dni, correo, contrasena, bornUser, celular, req.params.id]
         );
 
         if (result.affectedRows === 0) {
@@ -74,7 +76,7 @@ export const updateUser = async (req, res) => {
 // ELIMINAR USUARIO
 export const deleteUser = async (req, res) => {
     try {
-        const [result] = await pool.query('DELETE FROM usuarios WHERE id = ?', [req.params.id]);
+        const [result] = await pool.query('DELETE FROM usuarios WHERE idUser = ?', [req.params.id]);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: "Usuario no encontrado" });

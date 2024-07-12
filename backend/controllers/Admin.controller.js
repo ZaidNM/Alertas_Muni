@@ -1,9 +1,9 @@
 import { pool } from "../db.js"; // Ajusta la ruta según la estructura de tu proyecto
 
-// OBTENER UN USUARIO
+// OBTENER UN ADMIN
 export const getAdmin = async (req, res) => {
     try {
-        const [result] = await pool.query('SELECT * FROM admins WHERE id = ?', [req.params.id]);
+        const [result] = await pool.query('SELECT * FROM admins WHERE idAdmin = ?', [req.params.id]);
 
         if (result.length === 0) {
             return res.status(404).json({ message: "admin no encontrado" });
@@ -15,7 +15,7 @@ export const getAdmin = async (req, res) => {
     }
 }
 
-// OBTENER TODOS LOS USUARIOS
+// OBTENER TODOS LOS ADMIN
 export const getAdmins = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM admins');
@@ -25,7 +25,7 @@ export const getAdmins = async (req, res) => {
     }
 }
 
-// CREAR USUARIO
+// CREAR ADMIN
 export const createAdmin = async (req, res) => {
     try {
         const { nombre, apellido, dni, correo, contrasena, dia, mes, ano, celular, tipoAdmin } = req.body;
@@ -53,13 +53,15 @@ export const createAdmin = async (req, res) => {
     }
 };
 
-// ACTUALIZAR USUARIO
+// ACTUALIZAR ADMIN
 export const updateAdmin = async (req, res) => {
     try {
-        const { nomAdmin, apeAdmin, dniAdmin, correoAdmin, contraAdmin, bornAdmin, celAdmin, typeAdmin } = req.body;
+        const { nombre, apellido, dni, correo, contrasena, dia, mes, ano, celular, tipoAdmin } = req.body;
+        const bornAdmin = `${ano}-${mes}-${dia}`;
+        //console.log(req.body)
         const [result] = await pool.query(
-            'UPDATE usuarios SET nomAdmin = ?, apeAdmin = ?, dniAdmin = ?, correoAdmin = ?, contraAdmin = ?, bornAdmin = ?, celAdmin = ? WHERE id = ?',
-            [nomAdmin, apeAdmin, dniAdmin, correoAdmin, contraAdmin, bornAdmin, celAdmin, req.params.id]
+            'UPDATE admins SET nomAdmin = ?, apeAdmin = ?, dniAdmin = ?, correoAdmin = ?, contraAdmin = ?, bornAdmin = ?, celAdmin = ?, typeAdmin = ? WHERE idAdmin = ?',
+            [nombre, apellido, dni, correo, contrasena, bornAdmin, celular, tipoAdmin, req.params.id]
         );
 
         if (result.affectedRows === 0) {
@@ -72,10 +74,10 @@ export const updateAdmin = async (req, res) => {
     }
 }
 
-// ELIMINAR USUARIO
+// ELIMINAR ADMIN
 export const deleteAdmin = async (req, res) => {
     try {
-        const [result] = await pool.query('DELETE FROM admins WHERE id = ?', [req.params.id]);
+        const [result] = await pool.query('DELETE FROM admins WHERE idAdmin = ?', [req.params.id]);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: "Admin no encontrado" });

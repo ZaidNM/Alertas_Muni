@@ -59,7 +59,7 @@ export const AdminContextProvider = ({ children }) => {
         try {
             const response = await updateAdminRequest(id, newFields);
             //setUsers(admins.map((admin) => (admin.id === id ? response.data : admin))); // Actualizar lista de admins
-            console.log(response.data);
+            console.log("Esto es el response:",response.data);
         } catch (error) {
             console.log(error);
         }

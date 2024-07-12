@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import {useNavigate} from 'react-router-dom';
 import CardUser from './CardUser.jsx';
 import { useCap } from '../../context/CapContext.jsx';
 import Button from '../ui/Button.tsx';
+import {useUsers} from '../../context/UsersContext.jsx';
 
 export default function AllCardsUser() {
     const { caps, capLoadUsers } = useCap();
@@ -26,6 +28,16 @@ export default function AllCardsUser() {
         setCurrentPage(pageNumber);
     };
 
+    
+    const { login, deleteUser, updateUser } = useUsers();
+    const navigate = useNavigate();
+    
+    //Eliminar usuario
+    const handleDelete = (idUser) => {
+        deleteUser(idUser);
+    };
+
+
     return (
         <main className="container mx-auto py-8">
             <section className="max-w-screen-lg mx-auto">
@@ -36,8 +48,8 @@ export default function AllCardsUser() {
                                 nombre={cap.nomUser}
                                 apellido={cap.apeUser}
                             />
-                            <Button className="mx-2 bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]" >Editar</Button>
-                            <Button className="bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]">Eliminar</Button>
+                            <Button className="mx-2 bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]" onClick={() => navigate(`/admin/edit-user/${cap.idUser}`)}>Editar</Button>
+                            <Button className="bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]" onClick={() => handleDelete(cap.idUser)}>Eliminar</Button>
                         </div>
                     ))}
                 </div>

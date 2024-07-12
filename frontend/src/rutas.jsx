@@ -15,7 +15,9 @@ import Formulario from './paginas/userPages/formulario/formulario'
 
 import HomeAdmin from './paginas/adminPages/HomeAdmin';
 import AllUser from './paginas/adminPages/AllUser';
+import EditUser from './paginas/adminPages/EditUser.jsx';
 import AllAdmin from './paginas/adminPages/AllAdmin'
+import EditAdmin from './paginas/adminPages/EditAdmin.jsx'
 import HomeUser from './paginas/userPages/HomeUser'
 import RegistroAdmin from './paginas/adminPages/ResgistroAdmin'
 import {RoutesAdmin,RoutesUser} from './ProtectedRoutes.jsx';
@@ -41,7 +43,9 @@ export default function Rutas() {
                 <Route element={<RoutesAdmin/>}>
                 <Route path="/admin/home" element={<HomeAdmin />} />
                 <Route path="/admin/all-user" element={<AllUser />} />
+                <Route path="/admin/edit-user/:id" element={<EditUser />} />
                 <Route path="/admin/all-admin" element={<AllAdmin />} />
+                <Route path="/admin/edit-admin/:id" element={<EditAdmin />} />
                 <Route path="/admin/registro" element={<RegistroAdmin />} />
                 </Route>
 
