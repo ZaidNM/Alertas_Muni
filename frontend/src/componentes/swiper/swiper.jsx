@@ -38,11 +38,11 @@ const SwiperComponent = ({ data }) => {
             {data.map((item, index) => (
                 <SwiperSlide key={index}>
                     <Card
-                        imgSrc={item.imgSrc}
-                        title={item.title}
-                        description={item.description}
-                        link={item.link}
-                        linkText={item.linkText}
+                        imgSrc={item.imgSrc || item.imagen}
+                        title={item.title || item.titulo}
+                        description={item.description || item.descripcion}
+                        link={item.link || item.ubicacion || '#'}
+                        linkText={item.linkText || item.linkTexto || (item.estado ? `Estado: ${item.estado}` : 'Más información')}
                     />
                 </SwiperSlide>
             ))}

@@ -18,8 +18,8 @@ export const getUser = async (req, res) => {
 // OBTENER TODOS LOS USUARIOS
 export const getUsers = async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM usuarios');
-        res.json(result);
+        const [users] = await pool.query('SELECT * FROM usuarios');
+        res.json(users);
     } catch (error) {
         return res.status(500).json({ message: "Error al conectar con el servidor" });
     }

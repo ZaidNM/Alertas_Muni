@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../../componentes/header/header'
 import Footer from '../../../componentes/footer/footer'
 import banPr from '../../../assets/img/preguntas.png'
-import dataPrFre from '../../../componentes/dataS/dataPrFre'
+import { captPreguntasRequest } from '../../../api/capt.api'
 
 
 const Pregunta = ({ pregunta, respuesta }) => (
@@ -13,6 +13,12 @@ const Pregunta = ({ pregunta, respuesta }) => (
 );
 
 export default function PrFrecuentes() {
+    const [questions, setQuestions] = useState([])
+
+    useEffect(() => {
+        captPreguntasRequest().then(response => setQuestions(response.data)).catch(console.error)
+    }, [])
+
     return (
         <main>
             <Header />
@@ -22,7 +28,7 @@ export default function PrFrecuentes() {
 
                 <h1 className='text-5xl font-medium py-20'>Preguntas Frecuentes</h1>
 
-                {dataPrFre.map((faq, index) => (
+                {questions.map((faq) => (
                     <Pregunta key={index} pregunta={faq.pregunta} respuesta={faq.respuesta} />
                 ))}
             </div>

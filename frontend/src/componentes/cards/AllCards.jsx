@@ -26,11 +26,11 @@ export default function AllCards({ data }) {
           {currentCards.map((dat, index) => (
             <div key={index} className="flex justify-center">
               <Card
-                imgSrc={dat.imgSrc}
-                title={dat.title}
-                description={dat.description}
-                link={dat.link}
-                linkText={dat.linkText}
+                imgSrc={dat.imgSrc || dat.imagen}
+                title={dat.title || dat.titulo}
+                description={dat.description || dat.descripcion}
+                link={dat.link || dat.ubicacion || '#'}
+                linkText={dat.linkText || dat.linkTexto || (dat.estado ? `Estado: ${dat.estado}` : 'Más información')}
               />
               
             </div>

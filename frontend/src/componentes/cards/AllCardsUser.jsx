@@ -47,6 +47,10 @@ export default function AllCardsUser() {
                             <CardUser
                                 nombre={cap.nomUser}
                                 apellido={cap.apeUser}
+                                dni={cap.dniUser}
+                                correo={cap.correoUser}
+                                nacimiento={cap.bornUser}
+                                celular={cap.celUser}
                             />
                             <Button className="mx-2 bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]" onClick={() => navigate(`/admin/edit-user/${cap.idUser}`)}>Editar</Button>
                             <Button className="bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]" onClick={() => handleDelete(cap.idUser)}>Eliminar</Button>

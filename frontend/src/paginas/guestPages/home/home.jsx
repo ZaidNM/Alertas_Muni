@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../componentes/header/header"
 import Footer from "../../../componentes/footer/footer";
 import SwiperComponent from "../../../componentes/swiper/swiper";
-import Data_destacados from "../../../componentes/dataS/dataDestacados";
-import Data_news from "../../../componentes/dataS/dataNoticias";
 import './home.css'
 import { Button } from "../../../componentes/ui";
+import { captDestacadosRequest, captNoticiasRequest } from "../../../api/capt.api";
 
 
 export default function Home() {
+    const [destacados, setDestacados] = useState([])
+    const [news, setNews] = useState([])
+
+    useEffect(() => {
+        Promise.all([captDestacadosRequest(), captNoticiasRequest()])
+            .then(([destacadosResponse, newsResponse]) => {
+                setDestacados(destacadosResponse.data)
+                setNews(newsResponse.data)
+            })
+            .catch(console.error)
+    }, [])
+
     return (
         <main>
             <Header />
@@ -27,7 +38,7 @@ export default function Home() {
 
                 <h1>Destacados</h1>
                 <article className="cont-tarjetas">
-                    <SwiperComponent data={Data_destacados} />
+                    <SwiperComponent data={destacados} />
                 </article>
             </section>
 
@@ -39,7 +50,7 @@ export default function Home() {
             <section className="noticias">
                 <h1>Noticias</h1>
                 <article className="cont-tarjetas">
-                    <SwiperComponent data={Data_news} />
+                    <SwiperComponent data={news} />
                 </article>
 
             </section>

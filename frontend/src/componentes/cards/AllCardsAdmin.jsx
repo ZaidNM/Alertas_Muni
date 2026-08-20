@@ -45,6 +45,11 @@ export default function AllCardsAdmin() {
                             <CardAdmin
                                 nombre={cap.nomAdmin}
                                 apellido={cap.apeAdmin}
+                                dni={cap.dniAdmin}
+                                correo={cap.correoAdmin}
+                                nacimiento={cap.bornAdmin}
+                                celular={cap.celAdmin}
+                                tipo={cap.typeAdmin}
                             />
                             <Button className="mx-2 bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]" onClick={() => navigate(`/admin/edit-admin/${cap.idAdmin}`)}>Editar</Button>
                             <Button className="bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]" onClick={() => handleDelete(cap.idAdmin)}>Eliminar</Button>

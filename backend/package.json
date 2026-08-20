@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon --ignore node_modules index.js",
     "migrate": "node migrate/run.js up",
     "migrate:down": "node migrate/run.js down",
     "migrate:reset": "node migrate/run.js reset",

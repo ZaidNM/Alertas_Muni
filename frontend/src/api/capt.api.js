@@ -7,3 +7,23 @@ export const captAdminsRequest = async () => {
 export const captUsersRequest = async () => {
     return await axios.get('http://localhost:4000/capt/users')
 }
+
+export const captNoticiasRequest = async () => {
+    return await axios.get('http://localhost:4000/capt/noticias')
+}
+
+export const captReportesRequest = async (slug) => {
+    return await axios.get(`http://localhost:4000/capt/reportes/${slug}`)
+}
+
+export const captDestacadosRequest = async () => {
+    return await axios.get('http://localhost:4000/capt/destacados')
+}
+
+export const captPreguntasRequest = async () => {
+    return await axios.get('http://localhost:4000/capt/preguntas')
+}
+
+export const captSliderRequest = async (section) => {
+    return await axios.get(`http://localhost:4000/capt/slider/${section}`)
+}
