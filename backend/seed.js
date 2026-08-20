@@ -1,20 +1,31 @@
 import { pool } from './db.js';
 
+const tables = [
+    'auditoria', 'historial_estados', 'notificaciones', 'comentarios',
+    'slider_imagenes', 'preguntas_frecuentes', 'destacados', 'noticias',
+    'reportes', 'categorias_reporte', 'municipalidades', 'admins', 'usuarios'
+];
+
+const clearSeedData = async () => {
+    await pool.query('SET FOREIGN_KEY_CHECKS = 0');
+    for (const table of tables) {
+        await pool.query(`TRUNCATE TABLE \`${table}\``);
+    }
+    await pool.query('SET FOREIGN_KEY_CHECKS = 1');
+};
+
 const seed = async () => {
     try {
+        if (process.argv.includes('--flush')) {
+            await clearSeedData();
+            console.log('Datos demo eliminados.');
+            return;
+        }
+
         const [rows] = await pool.query('SELECT COUNT(*) AS total FROM municipalidades');
         if (rows[0].total > 0) {
             console.log('Ya existen datos. Limpiando tablas...\n');
-            await pool.query('SET FOREIGN_KEY_CHECKS = 0');
-            const tables = [
-                'auditoria', 'historial_estados', 'notificaciones', 'comentarios',
-                'slider_imagenes', 'preguntas_frecuentes', 'destacados', 'noticias',
-                'reportes', 'categorias_reporte', 'municipalidades', 'admins', 'usuarios'
-            ];
-            for (const t of tables) {
-                await pool.query(`TRUNCATE TABLE \`${t}\``);
-            }
-            await pool.query('SET FOREIGN_KEY_CHECKS = 1');
+            await clearSeedData();
             console.log('Tablas limpiadas.\n');
         }
 

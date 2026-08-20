@@ -10,6 +10,7 @@
     "migrate:reset": "node migrate/run.js reset",
     "migrate:status": "node migrate/run.js status",
     "seed": "node seed.js",
+    "seed:flush": "node seed.js --flush",
     "setup": "node migrate/run.js reset && node migrate/run.js up && node seed.js"
   },
   "keywords": [],

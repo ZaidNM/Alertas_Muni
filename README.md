@@ -181,8 +181,9 @@ npm run dev
 | `npm run migrate:down` | Revertir la última migración |
 | `npm run migrate:reset` | Eliminar todas las tablas |
 | `npm run migrate:status` | Ver estado de las migraciones |
-| `npm run seed` | Poblar base de datos con datos demo |
-| `npm run setup` | Reset + Migrate + Seed completo |
+| `npm run seed` | Limpiar los datos actuales y poblar la base de datos con el demo definido en `seed.js` |
+| `npm run seed:flush` | Eliminar todos los datos demo y dejar las tablas vacías |
+| `npm run setup` | Eliminar tablas, ejecutar todas las migraciones y cargar los datos demo |
 
 ### Frontend (`cd frontend`)
 
