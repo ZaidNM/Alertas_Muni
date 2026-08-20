@@ -16,6 +16,12 @@ Sistema web para reportes ciudadanos de la región de Huánuco, Perú. Permite a
 | npm | (viene con Node) | — |
 | MySQL o MariaDB | 10.5+ | https://mariadb.org/download |
 
+## Configuración de git por primera vez
+| Configuración | Comando |
+|---------------|---------|
+| Nombre de usuario | `git config --global user.name "Tu Nombre"` |
+| Correo electrónico | `git config --global user.email "tu-correo@ejemplo.com"` |
+
 ## Instalación en Linux (Ubuntu/Debian)
 
 ### 1. Instalar Node.js
