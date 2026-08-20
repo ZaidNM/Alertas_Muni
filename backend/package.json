@@ -4,7 +4,13 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "migrate": "node migrate/run.js up",
+    "migrate:down": "node migrate/run.js down",
+    "migrate:reset": "node migrate/run.js reset",
+    "migrate:status": "node migrate/run.js status",
+    "seed": "node seed.js",
+    "setup": "node migrate/run.js reset && node migrate/run.js up && node seed.js"
   },
   "keywords": [],
   "author": "",
