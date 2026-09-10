@@ -1,3 +1,5 @@
+// FIX: Fallback de imágenes - noticias/reportes/destacados vienen sin imagen (DB solo tiene titulo/descripcion)
+// Se usa placeholder local para evitar <img> roto (404) y Swiper vacío
 import React from "react";
 import { Navigation, Pagination, A11y, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -6,6 +8,9 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import Card from "../cards/cards.jsx";
 import './swiper.css'
+import fallbackImg from "../../assets/img/huanuco.jpg"; // FIX: placeholder si item.imagen es null (noticias/reportes sin foto)
+
+const resolveImg = (item) => item.imgSrc || item.imagen || item.evidencia || fallbackImg;
 
 const SwiperComponent = ({ data }) => {
     return (
@@ -35,10 +40,13 @@ const SwiperComponent = ({ data }) => {
                 speed: 10000
             }}
         >
-            {data.map((item, index) => (
+            {/* FIX: Si data viene vacía, no renderiza swiper vacío */}
+            {data.length===0 ? (
+              <div className="py-8 text-center text-sm text-plomo">Sin contenido para mostrar.</div>
+            ) : data.map((item, index) => (
                 <SwiperSlide key={index}>
                     <Card
-                        imgSrc={item.imgSrc || item.imagen}
+                        imgSrc={resolveImg(item)}
                         title={item.title || item.titulo}
                         description={item.description || item.descripcion}
                         link={item.link || item.ubicacion || '#'}

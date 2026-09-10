@@ -1,58 +1,77 @@
-import React from 'react';
-import { Link, useNavigate } from "react-router-dom";
-import Imagen from '../../assets/img/logo.jpg';
-import { useLogin } from '../../context/LoginContext.jsx';
+import { useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import Imagen from "../../assets/img/logo.jpg";
+import { useLogin } from "../../context/LoginContext.jsx";
 
-export default function HeaderUSer() {
+const navLinkClass = ({ isActive }) =>
+  `relative px-3 py-2 text-sm font-semibold tracking-wide transition-colors ${
+    isActive ? "text-nilo" : "text-negro hover:text-nilo"
+  } after:absolute after:left-3 after:right-3 after:-bottom-0.5 after:h-[2px] after:bg-nilo after:origin-left after:transition-transform ${
+    isActive ? "after:scale-x-100" : "after:scale-x-0 hover:after:scale-x-100"
+  }`;
 
-    const { login, logout } = useLogin();
-    const navigate = useNavigate();
+export default function HeaderUser() {
+  const { login, logout } = useLogin();
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const handleLogout = () => { logout(); navigate("/"); };
 
-    const handleLogout = () => {
-        logout();
-        navigate('/'); //redirige al cerrar sesion
-    };
+  return (
+    <header className="sticky top-0 z-50 border-b border-plomo-light bg-crema-light/85 backdrop-blur-md">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
+        <Link to="/user/home" className="flex items-center gap-3">
+          <img src={Imagen} alt="logo" className="h-11 w-11 rounded-xl object-cover shadow-soft ring-1 ring-nilo/10" />
+          <div className="leading-tight hidden sm:block">
+            <p className="font-display text-[15px] font-bold text-nilo-dark">ReporteCiudadano</p>
+            <p className="text-[11px] font-medium tracking-widest text-plomo">CIUDADANO</p>
+          </div>
+        </Link>
 
-    return (
-        <header className="flex items-center py-2 px-4 bg-[#2D9596] gap-2">
-            <div className="logo">
-                <a href="#home">
-                    <img src={Imagen} alt="Logo" className="h-12 block shadow-lg" />
-                </a>
+        <nav className="hidden items-center gap-1 md:flex">
+          <NavLink to="/user/home" className={navLinkClass}>Inicio</NavLink>
+          <NavLink to="/instrucciones" className={navLinkClass}>Instrucciones</NavLink>
+          <NavLink to="/noticias" className={navLinkClass}>Noticias</NavLink>
+          <NavLink to="/reportes" className={navLinkClass}>Reportes</NavLink>
+          <NavLink to="/formulario" className={navLinkClass}>Formulario</NavLink>
+        </nav>
+
+        <div className="hidden items-center gap-3 md:flex">
+          <div className="flex items-center gap-3 rounded-full border border-plomo-light bg-white px-2 py-1.5 pr-4 shadow-sm">
+            <img src={Imagen} alt="avatar" className="h-9 w-9 rounded-full object-cover" />
+            <div className="leading-tight">
+              <p className="text-sm font-bold text-negro">{login ? `${login.nombre} ${login.apellido}` : "Usuario"}</p>
+              <p className="text-xs font-medium text-plomo">Ciudadano</p>
             </div>
-            <input type="checkbox" id='check' className="hidden" />
-            <label htmlFor="check" className='mostrar-menu text-3xl cursor-pointer hidden text-[#FBFBCC] transition-colors duration-400 order-1 hover:text-[#6ac2fc]'>
-                &#8801;
-            </label>
-            <nav className="flex items-center flex-grow justify-between pl-4 fixed w-full h-screen bg-[#0071BC] right-[-100%] top-0 text-center p-12 z-50 transition-[right] duration-800 md:static md:flex md:flex-row md:items-center md:justify-between md:p-0 md:w-auto md:h-auto md:bg-transparent">
-                <ul className="list-none flex flex-col gap-1 md:flex-row md:gap-4">
-                    <li className="pb-3 md:pb-0">
-                        <Link to="/home-user" className="text-white no-underline font-bold transition-colors duration-300 hover:text-[#FBFBCC]">Inicio</Link>
-                    </li>
-                    <li className="pb-3 md:pb-0">
-                        <Link to="/instrucciones" className="text-white no-underline font-bold transition-colors duration-300 hover:text-[#FBFBCC]">Instrucciones</Link>
-                    </li>
-                    <li className="pb-3 md:pb-0">
-                        <Link to="/noticias" className="text-white no-underline font-bold transition-colors duration-300 hover:text-[#FBFBCC]">Noticias</Link>
-                    </li>
-                    <li className="pb-3 md:pb-0">
-                        <Link to="/reportes" className="text-white no-underline font-bold transition-colors duration-300 hover:text-[#FBFBCC]">Reportes</Link>
-                    </li>
-                    <li className="pb-3 md:pb-0">
-                        <Link to="/formulario" className="text-white no-underline font-bold transition-colors duration-300 hover:text-[#FBFBCC]">Formulario</Link>
-                    </li>
-                </ul>
-                <div className="flex flex-col items-center mt-8 md:flex-row md:mt-0">
-                    <div className="bg-[#ECF4D6] p-2 pl-5 rounded-lg flex items-center space-x-10">
-                        <img src={Imagen} alt="User" className="h-12 w-12 rounded-full" />
-                        <div>
-                            <h1 className="text-lg font-semibold">{login ? `${login.nombre} ${login.apellido}` : "*********"}</h1>
-                            <h3 className="text-sm">Usuario</h3>
-                            <button className="text-red-600 hover:text-red-800 text-sm" onClick={handleLogout}>Cerrar sesión</button>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </header>
-    );
+          </div>
+          <button onClick={handleLogout} className="rounded-full bg-negro px-4 py-2 text-sm font-semibold text-white hover:bg-black transition">Salir</button>
+        </div>
+
+        <button aria-label="Abrir menú" onClick={() => setOpen(!open)} className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-nilo text-white md:hidden">
+          <span className="text-xl leading-none">{open ? "×" : "☰"}</span>
+        </button>
+      </div>
+
+      <div className={`md:hidden overflow-hidden border-t border-plomo-light bg-white transition-all ${open ? "max-h-[520px] opacity-100" : "max-h-0 opacity-0"}`}>
+        <nav className="flex flex-col px-4 py-4 gap-1">
+          {[
+            ["/user/home", "Inicio"],
+            ["/instrucciones", "Instrucciones"],
+            ["/noticias", "Noticias"],
+            ["/reportes", "Reportes"],
+            ["/formulario", "Formulario"],
+          ].map(([to, label]) => (
+            <NavLink key={to} to={to} onClick={() => setOpen(false)} className={({ isActive }) => `rounded-xl px-4 py-3 text-sm font-semibold ${isActive ? "bg-nilo-muted text-nilo" : "text-negro hover:bg-plomo-lighter"}`}>{label}</NavLink>
+          ))}
+          <div className="mt-4 rounded-2xl border border-plomo-light bg-crema-light p-3 flex items-center gap-3">
+            <img src={Imagen} alt="avatar" className="h-10 w-10 rounded-full" />
+            <div className="flex-1">
+              <p className="text-sm font-bold text-negro">{login ? `${login.nombre} ${login.apellido}` : "Usuario"}</p>
+              <p className="text-xs text-plomo">Ciudadano</p>
+            </div>
+            <button onClick={handleLogout} className="rounded-full bg-negro px-3 py-2 text-xs font-bold text-white">Salir</button>
+          </div>
+        </nav>
+      </div>
+    </header>
+  );
 }

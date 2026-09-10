@@ -1,99 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CardAdmin from './CardAdmin.jsx';
 import { useCap } from '../../context/CapContext.jsx';
-import Button from '../ui/Button.tsx';
 import {useAdmins} from '../../context/AdminContext.jsx';
 
 export default function AllCardsAdmin() {
-    const { caps, capLoadAdmin } = useCap();
-    const [currentPage, setCurrentPage] = useState(1); // Estado para la página actual
-    const cardsPerPage = 6; // 3 cards por fila, 2 filas = 6 cards por página
+  const { caps, capLoadAdmin } = useCap();
+  const [currentPage, setCurrentPage] = useState(1);
+  const cardsPerPage = 6;
+  const indexOfLastCard = currentPage * cardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+  const currentCards = caps.slice(indexOfFirstCard, indexOfLastCard);
+  useEffect(() => { capLoadAdmin(); }, []);
+  const totalPages = Math.ceil(caps.length / cardsPerPage);
+  const paginate = n => { if(n>=1&&n<=totalPages) setCurrentPage(n) };
+  const { deleteAdmin } = useAdmins();
+  const navigate = useNavigate();
+  const handleDelete = (id) => { if(confirm('¿Eliminar administrador?')) deleteAdmin(id); };
 
-    // Calcula el índice inicial y final de las tarjetas a mostrar en la página actual
-    const indexOfLastCard = currentPage * cardsPerPage;
-    const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-    const currentCards = caps.slice(indexOfFirstCard, indexOfLastCard);
-
-    useEffect(() => {
-        capLoadAdmin();
-    }, [capLoadAdmin]);
-
-    // Total de páginas
-    const totalPages = Math.ceil(caps.length / cardsPerPage);
-
-    // Función para cambiar de página
-    const paginate = pageNumber => {
-        if (pageNumber < 1 || pageNumber > totalPages) return;
-        setCurrentPage(pageNumber);
-    };
-
-    const { login, deleteAdmin, updateAdmin } = useAdmins();
-    const navigate = useNavigate();
-
-    //Eliminar admin
-    const handleDelete = (idAdmin) => {
-        deleteAdmin(idAdmin);
-    };
-
-    return (
-        <main className="container mx-auto py-8">
-            <section className="max-w-screen-lg mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
-                    {currentCards.map((cap, index) => (
-                        <div key={index} className=" justify-center text-center text-2xl text-[#2D9596] uppercase font-medium bg-[#ECF4D6] rounded-lg shadow-md p-5 max-w-full w-[45vh] h-auto mb-20">
-                            <CardAdmin
-                                nombre={cap.nomAdmin}
-                                apellido={cap.apeAdmin}
-                                dni={cap.dniAdmin}
-                                correo={cap.correoAdmin}
-                                nacimiento={cap.bornAdmin}
-                                celular={cap.celAdmin}
-                                tipo={cap.typeAdmin}
-                            />
-                            <Button className="mx-2 bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]" onClick={() => navigate(`/admin/edit-admin/${cap.idAdmin}`)}>Editar</Button>
-                            <Button className="bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]" onClick={() => handleDelete(cap.idAdmin)}>Eliminar</Button>
-                        </div>
-                    ))}
+  return (
+    <div className="mx-auto max-w-6xl px-6 py-6">
+      {currentCards.length===0 ? <div className="rounded-2xl bg-white p-10 text-center ring-1 ring-plomo-light"><p className="text-plomo">Sin administradores</p></div> : (
+        <div className="grid gap-5 md:grid-cols-3">
+          {currentCards.map((cap,i)=> (
+            <div key={i} className="rounded-2xl bg-white p-5 shadow-card ring-1 ring-plomo-light hover:shadow-float transition">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-negro text-white font-bold">{cap.nomAdmin?.[0]}</div>
+                <div>
+                  <p className="text-sm font-bold text-negro">{cap.nomAdmin} {cap.apeAdmin}</p>
+                  <span className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold tracking-wide ${cap.typeAdmin==='superadmin'?'bg-nilo text-white':'bg-plomo-lighter text-plomo-dark'}`}>{cap.typeAdmin}</span>
                 </div>
-            </section>
-
-            {/* Botón de paginación */}
-            <nav className="mt-8 flex justify-center">
-                <ul className="inline-flex -space-x-px text-sm">
-                    <li>
-                        <button
-                            onClick={() => paginate(currentPage - 1)}
-                            className={`flex items-center justify-center px-3 h-8 leading-tight bg-[#2D9596] text-[#ECF4D6] border border-[#2D9596] rounded-l-lg hover:bg-[#ECF4D6] hover:text-[#2D9596] focus:outline-none focus:bg-[#ECF4D6] focus:text-[#2D9596]`}
-                            disabled={currentPage === 1}
-                        >
-                            Previous
-                        </button>
-                    </li>
-                    {[...Array(totalPages).keys()].map((number) => (
-                        <li key={number}>
-                            <button
-                                onClick={() => paginate(number + 1)}
-                                className={`flex items-center justify-center px-3 h-8 leading-tight ${currentPage === number + 1
-                                    ? 'bg-[#ECF4D6] text-[#2D9596] border border-[#2D9596]'
-                                    : 'bg-[#2D9596] text-[#ECF4D6] border border-[#2D9596]'
-                                    } hover:bg-[#ECF4D6] hover:text-[#2D9596] focus:outline-none focus:bg-[#ECF4D6] focus:text-[#2D9596]`}
-                            >
-                                {number + 1}
-                            </button>
-                        </li>
-                    ))}
-                    <li>
-                        <button
-                            onClick={() => paginate(currentPage + 1)}
-                            className={`flex items-center justify-center px-3 h-8 leading-tight bg-[#2D9596] text-[#ECF4D6] border border-[#2D9596] rounded-r-lg hover:bg-[#ECF4D6] hover:text-[#2D9596] focus:outline-none focus:bg-[#ECF4D6] focus:text-[#2D9596]`}
-                            disabled={currentPage === totalPages}
-                        >
-                            Next
-                        </button>
-                    </li>
-                </ul>
-            </nav>
-        </main>
-    );
+              </div>
+              <CardAdmin nombre={cap.nomAdmin} apellido={cap.apeAdmin} dni={cap.dniAdmin} correo={cap.correoAdmin} nacimiento={cap.bornAdmin?.slice(0,10)} celular={cap.celAdmin} tipo={cap.typeAdmin} />
+              <div className="mt-4 flex gap-2">
+                <button onClick={()=>navigate(`/admin/edit-admin/${cap.idAdmin}`)} className="flex-1 rounded-full bg-nilo py-2 text-xs font-bold text-white hover:bg-nilo-dark">Editar</button>
+                <button onClick={()=>handleDelete(cap.idAdmin)} className="flex-1 rounded-full bg-white py-2 text-xs font-bold text-red-600 ring-1 ring-red-200 hover:bg-red-50">Eliminar</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      {totalPages>1 && (
+        <div className="mt-8 flex justify-center">
+          <div className="inline-flex items-center gap-1 rounded-full bg-white p-1.5 shadow-card ring-1 ring-plomo-light">
+            <button onClick={()=>paginate(currentPage-1)} disabled={currentPage===1} className="rounded-full px-4 py-2 text-sm font-bold disabled:opacity-30 hover:bg-plomo-lighter">‹</button>
+            {[...Array(totalPages)].map((_,n)=><button key={n} onClick={()=>paginate(n+1)} className={`h-9 w-9 rounded-full text-sm font-bold ${currentPage===n+1?'bg-nilo text-white':'text-plomo hover:bg-plomo-lighter'}`}>{n+1}</button>)}
+            <button onClick={()=>paginate(currentPage+1)} disabled={currentPage===totalPages} className="rounded-full px-4 py-2 text-sm font-bold disabled:opacity-30 hover:bg-plomo-lighter">›</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }

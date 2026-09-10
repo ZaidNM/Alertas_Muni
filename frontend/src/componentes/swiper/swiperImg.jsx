@@ -1,3 +1,4 @@
+// FIX: Slider grande también tenía imágenes rotas (/img/slider/... no existe en public) + flechas grandes
 import React from "react";
 import { Navigation, Pagination, A11y, Autoplay, EffectFade} from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -6,6 +7,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 import './swiperImg.css'
+import fallbackBanner from "../../assets/img/banner.png"; // FIX: fallback si item.imagen es 404
 
 const SwiperImg = ({ data }) => {
     return (
@@ -26,9 +28,17 @@ const SwiperImg = ({ data }) => {
                 disableOnInteraction: false,
             }}
         >
-            {data.map((item, index) => (
+            {/* FIX: Fallback visual si no hay imágenes o la URL da 404 */}
+            {data.length===0 ? (
+              <div className="flex h-[220px] items-center justify-center bg-plomo-lighter text-plomo text-sm">Sin imágenes</div>
+            ) : data.map((item, index) => (
                 <SwiperSlide key={index}>
-                    <img src={item.imgSrc || item.imagen} alt={item.title || item.titulo} className="swiper-image" />
+                    <img
+                      src={item.imgSrc || item.imagen || fallbackBanner}
+                      alt={item.title || item.titulo || "slide"}
+                      className="swiper-image"
+                      onError={(e)=>{ e.currentTarget.src = fallbackBanner; }} // FIX: si /img/slider/... no existe, usa banner.png
+                    />
                 </SwiperSlide>
             ))}
         </Swiper>

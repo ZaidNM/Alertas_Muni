@@ -20,6 +20,8 @@ import AllAdmin from './paginas/adminPages/AllAdmin'
 import EditAdmin from './paginas/adminPages/EditAdmin.jsx'
 import HomeUser from './paginas/userPages/HomeUser'
 import RegistroAdmin from './paginas/adminPages/ResgistroAdmin'
+// FIX MAPA ADMIN: Importa página del mapa que muestra todos los puntos reportados con Leaflet
+import MapaReportes from './paginas/adminPages/MapaReportes.jsx'
 import {RoutesAdmin,RoutesUser} from './ProtectedRoutes.jsx';
 
 export default function Rutas() {
@@ -47,6 +49,8 @@ export default function Rutas() {
                 <Route path="/admin/all-admin" element={<AllAdmin />} />
                 <Route path="/admin/edit-admin/:id" element={<EditAdmin />} />
                 <Route path="/admin/registro" element={<RegistroAdmin />} />
+                {/* FIX MAPA ADMIN: Ruta protegida solo para admin (RoutesAdmin) que renderiza el mapa con todos los reportes geolocalizados */}
+                <Route path="/admin/mapa" element={<MapaReportes />} />
                 </Route>
 
                 <Route element={<RoutesUser/>}>

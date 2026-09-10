@@ -1,6 +1,12 @@
+/* FIX: SwiperImg también tenía flechas grandes que tapaban el banner */
 .swiper-image {
     width: 100%;
     max-height: 80vh;
     object-fit: cover;
     object-position: 0% 70%;
+}
+/* Flechas más discretas en el slider grande */
+.swiper .swiper-button-next, .swiper .swiper-button-prev{
+  width:38px !important; height:38px !important;
+  background: rgba(255,255,255,.9) !important;
 }

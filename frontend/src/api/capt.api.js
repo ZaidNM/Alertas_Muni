@@ -27,3 +27,10 @@ export const captPreguntasRequest = async () => {
 export const captSliderRequest = async (section) => {
     return await axios.get(`http://localhost:4000/capt/slider/${section}`)
 }
+
+// FIX MAPA ADMIN: Llama a GET /capt/reportes/mapa del backend
+// ¿Para qué? Trae todos los reportes con latitud/longitud para pintarlos como Markers en el mapa del admin.
+// Sin esto, el frontend solo podía pedir reportes por distrito (/capt/reportes/:slug) y no había vista global.
+export const captReportesMapaRequest = async () => {
+    return await axios.get('http://localhost:4000/capt/reportes/mapa')
+}

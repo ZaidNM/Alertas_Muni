@@ -1,61 +1,62 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../componentes/footer/footer";
 import SwiperComponent from "../../componentes/swiper/swiper";
-import { Button } from "../../componentes/ui";
-import HeaderUSer from "../../componentes/header/HeaderUser";
+import HeaderUser from "../../componentes/header/HeaderUser";
 import { captDestacadosRequest, captNoticiasRequest } from "../../api/capt.api";
-
+import { useLogin } from "../../context/LoginContext";
 
 export default function HomeUser() {
-    const [destacados, setDestacados] = useState([])
-    const [news, setNews] = useState([])
+  const [destacados, setDestacados] = useState([])
+  const [news, setNews] = useState([])
+  const { login } = useLogin();
+  useEffect(() => {
+    Promise.all([captDestacadosRequest(), captNoticiasRequest()]).then(([d,n])=>{ setDestacados(d.data); setNews(n.data)}).catch(console.error)
+  }, [])
+  return (
+    <div className="min-h-screen bg-crema-light">
+      <HeaderUser />
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/src/assets/img/banner.png')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-gradient-to-t from-nilo-900/80 via-nilo-700/40 to-transparent" />
+        <div className="relative mx-auto max-w-7xl px-6 py-16">
+          <div className="max-w-2xl rounded-3xl bg-white/95 p-6 shadow-float ring-1 ring-plomo-light backdrop-blur">
+            <p className="text-xs font-bold tracking-widest text-nilo">HOLA, {login?.nombre?.toUpperCase() || "CIUDADANO"}</p>
+            <h1 className="mt-1 font-display text-3xl font-bold text-negro">¿Qué quieres reportar hoy?</h1>
+            <p className="mt-2 text-sm text-plomo">Tu reporte llega directo a la municipalidad con ubicación y evidencia. Respuesta en 24h.</p>
+            <Link to="/formulario" className="mt-5 inline-flex rounded-full bg-nilo px-7 py-3 text-sm font-bold text-white hover:bg-nilo-dark">Crear reporte →</Link>
+          </div>
+        </div>
+      </section>
 
-    useEffect(() => {
-        Promise.all([captDestacadosRequest(), captNoticiasRequest()])
-            .then(([destacadosResponse, newsResponse]) => {
-                setDestacados(destacadosResponse.data)
-                setNews(newsResponse.data)
-            })
-            .catch(console.error)
-    }, [])
+      <section className="mx-auto max-w-7xl px-6 py-10">
+        <div className="rounded-2xl bg-white p-6 shadow-card ring-1 ring-plomo-light">
+          <h2 className="font-display text-lg font-bold text-negro">Bienvenido a tu panel ciudadano</h2>
+          <p className="mt-1 text-sm text-plomo">Desde aquí puedes crear reportes, revisar destacadas y mantenerte informado con noticias locales.</p>
+        </div>
+      </section>
 
-    return (
-        <main>
-            <HeaderUSer />
+      <section className="bg-white py-10 border-y border-plomo-light">
+        <div className="mx-auto max-w-7xl px-6">
+          <h2 className="font-display text-2xl font-bold text-negro">Destacados</h2>
+          <div className="mt-6"><SwiperComponent data={destacados} /></div>
+        </div>
+      </section>
 
-            <section className="banner pb-5">
-                <Link to='/formulario'><Button className="bg-[#2D9596] hover:bg-[#ECF4D6] text-[#ECF4D6] hover:text-[#2D9596]">Formulario</Button></Link>
-            </section>
+      <section className="bg-nilo-muted py-10">
+        <div className="mx-auto max-w-3xl px-6 text-center">
+          <h2 className="font-display text-2xl font-bold text-negro">Tu participación importa</h2>
+          <p className="mt-2 text-sm text-plomo-dark">Cada reporte suma. Con tu ayuda mejoramos pistas, limpieza y seguridad en Huánuco.</p>
+        </div>
+      </section>
 
-            <section className="intro">
-                <h1>Bienvenidos</h1>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos adipisci vero necessitatibus, porro voluptates quaerat incidunt est expedita at facere reiciendis fugiat nam laboriosam nihil labore ea unde autem quidem?Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit nulla quam asperiores. Quam corporis assumenda reprehenderit, quaerat iusto necessitatibus nihil voluptatibus, velit distinctio, eveniet aliquam dignissimos fugiat ea tempore odit?</p>
-            </section>
-
-            <section className="destacados">
-
-                <h1>Destacados</h1>
-                <article className="cont-tarjetas">
-                    <SwiperComponent data={destacados} />
-                </article>
-            </section>
-
-            <section className="nosotros">
-                <h1>Nosotros</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum officiis dolore quod facere, possimus aspernatur dolores id voluptate molestiae minus quibusdam assumenda quia earum aperiam delectus labore voluptatibus corrupti mollitia!</p>
-            </section>
-
-            <section className="noticias">
-                <h1>Noticias</h1>
-                <article className="cont-tarjetas">
-                    <SwiperComponent data={news} />
-                </article>
-
-            </section>
-
-            <Footer />
-
-        </main>
-    );
+      <section className="bg-crema-light py-10">
+        <div className="mx-auto max-w-7xl px-6">
+          <h2 className="font-display text-2xl font-bold text-negro">Noticias</h2>
+          <div className="mt-6"><SwiperComponent data={news} /></div>
+        </div>
+      </section>
+      <Footer />
+    </div>
+  );
 }

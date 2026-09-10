@@ -1,45 +1,47 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Header from '../../../componentes/header/header'
 import Footer from '../../../componentes/footer/footer'
 import SwiperComponent from '../../../componentes/swiper/swiper'
-import f_news from '../../../assets/img/fondo-news.png'
 import SwiperImg from '../../../componentes/swiper/swiperImg'
-import { Button } from '../../../componentes/ui'
 import { captNoticiasRequest, captSliderRequest } from '../../../api/capt.api'
 
-
 export default function NewsPage() {
-    const [news, setNews] = useState([])
-    const [slider, setSlider] = useState([])
+  const [news, setNews] = useState([])
+  const [slider, setSlider] = useState([])
 
-    useEffect(() => {
-        Promise.all([captNoticiasRequest(), captSliderRequest('noticias')])
-            .then(([newsResponse, sliderResponse]) => {
-                setNews(newsResponse.data)
-                setSlider(sliderResponse.data)
-            })
-            .catch(console.error)
-    }, [])
+  useEffect(() => {
+    Promise.all([captNoticiasRequest(), captSliderRequest('noticias')])
+      .then(([n, s]) => { setNews(n.data); setSlider(s.data) })
+      .catch(console.error)
+  }, [])
 
-    return (
-        <main>
-            <Header/>
-                
-            <article className="cont-tarjeta">
-                <SwiperImg data={slider} />
-            </article>
-                
-            <article className="relative pt-5 bg-gradient-to-b from-transparent to-white pb-5" style={{ backgroundImage: `url(${f_news})`, backgroundSize: "cover", backgroundPosition: "0% 10%" }}>
-                <div className="absolute inset-0 bg-black opacity-50"></div>
-                <h1 className='relative text-center text-3xl font-medium text-white pb-10'>Noticias</h1>
-                <SwiperComponent data={news} />
-                <Link to="/noticias/all-noticias">
-                    <Button className='relative bg-emerald-600 hover:bg-emerald-700 text-[#ECF4D6] flex ml-auto mr-8'>Ver Más </Button>
-                </Link>
-            </article>
-                
-            <Footer/>
-        </main>
-    )
+  return (
+    <div className="min-h-screen bg-crema-light">
+      <Header/>
+      <div className="mx-auto max-w-6xl px-6 pt-6">
+        <div className="overflow-hidden rounded-3xl shadow-card ring-1 ring-plomo-light">
+          <SwiperImg data={slider} />
+        </div>
+      </div>
+
+      <section className="mx-auto max-w-7xl px-6 py-10">
+        <div className="flex items-end justify-between">
+          <div>
+            <span className="inline-flex rounded-full bg-nilo px-3 py-1 text-xs font-bold tracking-widest text-white">ACTUALIDAD</span>
+            <h1 className="mt-2 font-display text-3xl font-bold text-negro">Noticias municipales</h1>
+            <p className="mt-1 text-sm text-plomo">Obras, comunicados y eventos de las tres municipalidades.</p>
+          </div>
+          <Link to="/noticias/all-noticias" className="hidden rounded-full bg-nilo px-6 py-2.5 text-sm font-bold text-white hover:bg-nilo-dark md:inline-flex">Ver todas →</Link>
+        </div>
+        <div className="mt-8 rounded-3xl bg-white p-4 md:p-6 shadow-card ring-1 ring-plomo-light">
+          <SwiperComponent data={news} />
+        </div>
+        <Link to="/noticias/all-noticias" className="mt-6 flex justify-center md:hidden">
+          <span className="rounded-full bg-nilo px-6 py-3 text-sm font-bold text-white">Ver todas las noticias</span>
+        </Link>
+      </section>
+      <Footer/>
+    </div>
+  )
 }

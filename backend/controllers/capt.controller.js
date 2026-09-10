@@ -104,3 +104,32 @@ export const captSlider = async (req, res) => {
         res.status(500).json({ message: 'Error interno del servidor' });
     }
 };
+
+// FIX MAPA ADMIN: Endpoint para mostrar todas las alertas geolocalizadas en el mapa del admin
+// ¿Por qué se agregó? Antes solo existía captReportes por slug (un distrito), el admin no podía ver todos los puntos juntos.
+// ¿Qué hace? Consulta todos los reportes que tienen latitud/longitud (los que el ciudadano envió con ubicación).
+// Joins: municipalidades (para nombre/slug y filtrar por distrito en frontend), categorias_reporte (icono/nombre), usuarios (nombre del reportante).
+// WHERE latitud/longitud IS NOT NULL evita markers rotos en el mapa.
+// Se usa en frontend/src/paginas/adminPages/MapaReportes.jsx vía GET /capt/reportes/mapa
+export const captReportesMapa = async (req, res) => {
+    try {
+        const [reportes] = await pool.query(
+            `SELECT r.idReporte, r.titulo, r.descripcion, r.ubicacion,
+                    r.latitud, r.longitud, r.evidencia, r.estado,
+                    r.fechaCreacion, r.idMunicipalidad, r.idCategoria,
+                    m.nombre AS municipalidad, m.slug AS muniSlug,
+                    c.nombre AS categoria,
+                    u.nomUser, u.apeUser
+             FROM reportes r
+             INNER JOIN municipalidades m ON m.idMunicipalidad = r.idMunicipalidad
+             INNER JOIN categorias_reporte c ON c.idCategoria = r.idCategoria
+             INNER JOIN usuarios u ON u.idUser = r.idUser
+             WHERE r.latitud IS NOT NULL AND r.longitud IS NOT NULL
+             ORDER BY r.fechaCreacion DESC, r.idReporte DESC`
+        );
+        res.json(reportes);
+    } catch (error) {
+        console.error('Error al obtener reportes para mapa:', error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
