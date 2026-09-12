@@ -1,320 +1,153 @@
-# ReporteCiudadano
+# Alertas_Muni — ReporteCiudadano Huánuco
 
-Sistema web para reportes ciudadanos de la región de Huánuco, Perú. Permite a los ciudadanos reportar problemas de infraestructura, limpieza, seguridad y otros a las municipalidades de Huánuco, Amarilis y Pillco Marca.
+Sistema web para **reportes ciudadanos geolocalizados** de la región Huánuco (Huánuco, Amarilis, Pillco Marca). Los ciudadanos reportan problemas de infraestructura, limpieza, seguridad, etc. con **ubicación real del dispositivo (GPS)** y los administradores los visualizan en un **mapa interactivo** para su atención.
+
+> Repositorio original: `Savage-22/pr-react-uni` rama `zaid` → espejo en `ZaidNM/Alertas_Muni`
 
 ## Tecnologías
+- **Frontend:** React 18 + Vite + Tailwind CSS + React Router + Formik/Yup + Swiper + Leaflet (react-leaflet)
+- **Backend:** Node.js + Express + MySQL2 (promise) + CORS
+- **Base de datos:** MySQL / MariaDB 10.5+ (13 tablas + `proyect-uni.sql` dump)
+- **Mapa:** Leaflet + OpenStreetMap (sin API key) para admin; Google Maps link para usuario
 
-- **Frontend:** React 18 + Vite + Tailwind CSS
-- **Backend:** Node.js + Express + MySQL2
-- **Base de datos:** MySQL / MariaDB
+## Roles y accesos
 
-## Requisitos previos
+### Usuarios demo — Ciudadanos (8)
+| # | Nombre | Correo | Contraseña | DNI | Celular |
+|---|--------|--------|------------|-----|---------|
+| 1 | Ana García | ana.garcia@demo.com | ana1234 | 70123456 | 912345678 |
+| 2 | José Pérez | jose.perez@demo.com | jose123 | 71234567 | 923456789 |
+| 3 | María Flores | maria.flores@demo.com | maria123 | 72345678 | 934567890 |
+| 4 | Luis Cruz | luis.cruz@demo.com | luis123 | 73456789 | 945678901 |
+| 5 | Rosa Huamán | rosa.huaman@demo.com | rosa123 | 74567890 | 956789012 |
+| 6 | Pedro Sánchez | pedro.sanchez@demo.com | pedro123 | 75678901 | 967890123 |
+| 7 | Carmen Quispe | carmen.quispe@demo.com | carmen123 | 76789012 | 978901234 |
+| 8 | Juan Torres | juan.torres@demo.com | juan123 | 77890123 | 989012345 |
 
-| Programa | Versión mínima | Descarga |
-|----------|---------------|----------|
-| Node.js | 18+ | https://nodejs.org |
-| npm | (viene con Node) | — |
-| MySQL o MariaDB | 10.5+ | https://mariadb.org/download |
+### Administradores demo — Staff (3)
+| # | Nombre | Correo | Contraseña | Tipo | DNI |
+|---|--------|--------|------------|------|-----|
+| 1 | Carlos Mendoza | admin@demo.com | admin123 | superadmin | 45123678 |
+| 2 | Lucía Torres | lucia.torres@demo.com | lucia123 | editor | 46234789 |
+| 3 | Miguel Ríos | miguel.rios@demo.com | miguel123 | admin | 47345890 |
 
-## Configuración de git por primera vez
-| Configuración | Comando |
-|---------------|---------|
-| Nombre de usuario | `git config --global user.name "Tu Nombre"` |
-| Correo electrónico | `git config --global user.email "tu-correo@ejemplo.com"` |
+> Login unificado en `/login` detecta rol por email (consulta `GET /auth/admin/emails`). Ciudadano → `/user/home`, Admin → `/admin/home`.
 
-## Instalación en Linux (Ubuntu/Debian)
+## Funcionalidades por página
 
-### 1. Instalar Node.js
+| Ruta | Rol | Funcionalidad |
+|------|-----|---------------|
+| `/` | Guest | Hero, intro, destacados (Swiper), nosotros, noticias. Header dinámico (mantiene sesión) |
+| `/registro` | Guest | Registro ciudadano (Formik+Yup) → `POST /users` |
+| `/login` | Guest | Login ciudadano/admin → `POST /auth/user` o `/auth/admin` + `localStorage login` con sync entre pestañas (`storage` event) |
+| `/instrucciones` | Todos | Guía 4 pasos para reportar |
+| `/prfrecuentes` | Todos | FAQ |
+| `/noticias` + `/noticias/all-noticias` | Todos | Noticias municipales (`GET /capt/noticias`, slider `noticias`) |
+| `/reportes` `/reportes/huanuco|amarillis|pillco-marca` | Todos | Reportes por municipalidad (`GET /capt/reportes/:slug`) + slider `destacados` |
+| `/formulario` | User (requiere ubicación) | **Formulario funcional con GPS del dispositivo**: `navigator.geolocation.getCurrentPosition` → `latitud/longitud`, Nota: *"La ubicación será tomada del dispositivo donde usted envía el formulario"*, selects municipalidad/categoría (`GET /reportes/municipalidades|categorias`), preview mini-mapa Leaflet, `POST /reportes` guarda y aparece en mapa admin |
+| `/user/home` | User | Panel ciudadano personalizado |
+| `/admin/home` | Admin | Panel admin + acceso a `Mapa`, `Usuarios`, `Personal` |
+| `/admin/mapa` | Admin | **Mapa de alertas** Leaflet (`GET /capt/reportes/mapa`): todos los reportes con `lat,lng`, colores por estado (pendiente rojo, en_proceso ámbar, resuelto verde), filtros estado/municipalidad/categoría, popups con detalle + tabla sincronizada |
+| `/admin/all-user` `/admin/edit-user/:id` | Admin | CRUD usuarios |
+| `/admin/all-admin` `/admin/edit-admin/:id` | Admin | CRUD personal |
+| `/admin/registro` | Admin | Registro de admins |
 
+## Flujos principales
+
+### Flujo Ciudadano (reporte con ubicación real)
+1. Se registra (`/registro`) o inicia sesión (`/login` → `ana.garcia@demo.com / ana1234`)
+2. Va a `/formulario`
+3. Lee nota: *"La ubicación será tomada del dispositivo donde usted envía el formulario"*
+4. Pulsa **"📍 Usar mi ubicación"** → navegador pide permiso → captura `lat,lng` + precisión → auto-selecciona municipalidad más cercana → muestra mini-mapa y link Google Maps. Si falla, ingresa manual o usa "Abrir Google Maps".
+5. Completa `municipalidad`, `categoría`, `título`, `descripción`, evidencia (URL o nombre archivo)
+6. Envía → `POST /reportes` → `201 idReporte` + `ubicacion https://maps.google.com/?q=lat,lng` → mensaje éxito. El punto aparece instantáneo en `/admin/mapa`.
+
+### Flujo Admin (gestión)
+1. Login `admin@demo.com / admin123` → `/admin/home`
+2. Entra a **🗺️ Ver mapa de alertas** (`/admin/mapa`) → ve 21 puntos demo + nuevos. Filtra por estado/muni/categoría. Click pin → popup con título, estado, municipalidad, fecha, reportante, botón Google Maps.
+3. Gestiona usuarios/personal (`/admin/all-user`, `/admin/all-admin`) y contenidos (noticias/destacados).
+
+### Flujo Sesión
+- `LoginContext.jsx` guarda `login` en `localStorage` + `storage` listener → sesión persiste al cambiar de ventana/pestaña/ruta. Header dinámico (`header.jsx`) muestra avatar/nombre/Salir si hay sesión en cualquier ruta pública, evitando ilusión de "sesión cerrada".
+
+## Base de datos — 13 tablas (dump `proyect-uni.sql` + `backend/proyect-uni.sql`)
+
+| Tabla | Registros demo | Descripción |
+|-------|---------------|-------------|
+| `usuarios` | 8 | Ciudadanos |
+| `admins` | 3 | Staff |
+| `municipalidades` | 3 | Huánuco, Amarilis, Pillco Marca |
+| `categorias_reporte` | 8 | Infraestructura...Otros |
+| `reportes` | 21 | Incluye `latitud, longitud, ubicacion, estado` |
+| `noticias` | 8 | |
+| `destacados` | 5 | |
+| `preguntas_frecuentes` | 5 | |
+| `slider_imagenes` | 7 | |
+| `comentarios` | 8 | |
+| `notificaciones` | 6 | |
+| `historial_estados` | 7 | |
+| `auditoria` | 6 | |
+
+Import rápido: `mysql -u root < proyect-uni.sql` (raíz o `backend/proyect-uni.sql`) o `cd backend && npm run setup` (reset + migrate + seed).
+
+## Instalación
+
+### Requisitos
+Node 18+, MySQL/MariaDB 10.5+
+
+### Pasos (Windows/Linux)
 ```bash
-# Instalar nvm (gestor de versiones de Node)
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-source ~/.bashrc
-
-# Instalar Node.js
-nvm install 20
-nvm use 20
-node -v  # debe mostrar v20.x.x
-```
-
-### 2. Instalar MariaDB
-
-```bash
-sudo apt update
-sudo apt install -y mariadb-server
-
-# Iniciar servicio
-sudo systemctl start mariadb
-sudo systemctl enable mariadb
-
-# Configurar root sin contraseña (solo desarrollo)
-sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED VIA mysql_native_password USING PASSWORD('');"
-sudo mysql -e "FLUSH PRIVILEGES;"
-
-# Verificar conexión
-mysql -u root -e "SELECT VERSION();"
-```
-
-### 3. Crear la base de datos
-
-```bash
-mysql -u root -e "CREATE DATABASE IF NOT EXISTS \`proyect-uni\`;"
-```
-
-### 4. Clonar e instalar dependencias
-
-```bash
-git clone <URL_DEL_REPOSITORIO>
-cd pr-react-uni
+git clone https://github.com/ZaidNM/Alertas_Muni.git
+cd Alertas_Muni
 
 # Backend
 cd backend
 npm install
+# Crear DB (sin contraseña por defecto; si tu MySQL tiene pass, edita backend/db.js o export DB_PASSWORD=tu_pass)
+mysql -u root -e "CREATE DATABASE IF NOT EXISTS \`proyect-uni\`;"
+npm run setup   # o mysql -u root < ../proyect-uni.sql
 
 # Frontend
 cd ../frontend
 npm install
 ```
 
-### 5. Configurar base de datos (migraciones + datos demo)
-
+### Iniciar (2 terminales)
 ```bash
-cd backend
-npm run setup
-```
-
-### 6. Iniciar el proyecto
-
-Terminal 1 — Backend:
-```bash
+# Terminal 1 - Backend http://localhost:4000
 cd backend
 npm run dev
-# Servidor en http://localhost:4000
-```
 
-Terminal 2 — Frontend:
-```bash
-cd frontend
-npm run dev
-# App en http://localhost:5173
-```
-
-## Instalación en Windows
-
-### 1. Instalar Node.js
-
-1. Descargar desde https://nodejs.org (versión LTS)
-2. Ejecutar el instalador (marcar "Automatically install the necessary tools")
-3. Reiniciar la terminal
-
-```bash
-node -v  # debe mostrar v18.x.x o superior
-```
-
-### 2. Instalar MariaDB
-
-1. Descargar desde https://mariadb.org/download
-2. Ejecutar el instalador:
-   - Puerto: 3306 (default)
-   - Contraseña del root: dejar vacía o recordarla
-   - Servicio: agregar al PATH del sistema
-3. Abrir **MySQL Command Line Client** y verificar:
-
-```sql
-SELECT VERSION();
-```
-
-### 3. Crear la base de datos
-
-```bash
-mysql -u root -e "CREATE DATABASE IF NOT EXISTS `proyect-uni`;"
-```
-
-> Si configuraste contraseña, usa: `mysql -u root -p` y ingresa la contraseña.
-
-### 4. Clonar e instalar dependencias
-
-```bash
-git clone <URL_DEL_REPOSITORIO>
-cd pr-react-uni
-
-# Backend
-cd backend
-npm install
-
-# Frontend
-cd ..\frontend
-npm install
-```
-
-### 5. Configurar base de datos
-
-```bash
-cd backend
-npm run setup
-```
-
-### 6. Iniciar el proyecto
-
-Abrir **dos terminales**:
-
-Terminal 1 — Backend:
-```bash
-cd backend
-npm run dev
-```
-
-Terminal 2 — Frontend:
-```bash
+# Terminal 2 - Frontend http://localhost:5173
 cd frontend
 npm run dev
 ```
 
-## Scripts disponibles
+### Scripts
+`backend: npm run dev | migrate | migrate:down | migrate:reset | migrate:status | seed | seed:flush | setup`  
+`frontend: npm run dev | build | preview`
 
-### Backend (`cd backend`)
-
-| Comando | Descripción |
-|---------|-------------|
-| `npm run dev` | Iniciar servidor en modo desarrollo (con auto-reload) |
-| `npm run migrate` | Ejecutar migraciones pendientes |
-| `npm run migrate:down` | Revertir la última migración |
-| `npm run migrate:reset` | Eliminar todas las tablas |
-| `npm run migrate:status` | Ver estado de las migraciones |
-| `npm run seed` | Limpiar los datos actuales y poblar la base de datos con el demo definido en `seed.js` |
-| `npm run seed:flush` | Eliminar todos los datos demo y dejar las tablas vacías |
-| `npm run setup` | Eliminar tablas, ejecutar todas las migraciones y cargar los datos demo |
-
-### Frontend (`cd frontend`)
-
-| Comando | Descripción |
-|---------|-------------|
-| `npm run dev` | Iniciar servidor de desarrollo Vite |
-| `npm run build` | Generar build de producción |
-| `npm run preview` | Previsualizar build de producción |
-
-## Estructura del proyecto
-
+## Estructura
 ```
-pr-react-uni/
+Alertas_Muni/
+├── proyect-uni.sql          # Dump completo para otras PCs
 ├── backend/
-│   ├── db.js                  # Conexión a MySQL/MariaDB
-│   ├── index.js               # Servidor Express (puerto 4000)
-│   ├── seed.js                # Datos demo para las 13 tablas
-│   ├── migrate/
-│   │   ├── run.js             # Runner de migraciones (up/down/reset/status)
-│   │   ├── 00_base_tables.js  # usuarios + admins
-│   │   ├── 01_municipalidades.js
-│   │   ├── 02_categorias_reporte.js
-│   │   ├── 03_reportes.js
-│   │   ├── 04_noticias.js
-│   │   ├── 05_destacados.js
-│   │   ├── 06_preguntas_frecuentes.js
-│   │   ├── 07_slider_imagenes.js
-│   │   ├── 08_comentarios.js
-│   │   ├── 09_notificaciones.js
-│   │   ├── 10_historial_estados.js
-│   │   └── 11_auditoria.js
-│   └── package.json
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   └── package.json
-└── README.md
+│   ├── db.js                # Pool MySQL con fallback '' -> '1234' + autocreación DB
+│   ├── index.js             # Express :4000 + reporte.routes
+│   ├── controllers/reporte.controller.js # POST /reportes con GPS
+│   ├── routes/reporte.routes.js
+│   ├── migrate/00_...11_*.js
+│   └── seed.js
+└── frontend/
+    ├── src/paginas/adminPages/MapaReportes.jsx # Mapa Leaflet
+    ├── src/paginas/userPages/formulario/formulario.jsx # GPS dispositivo
+    └── src/context/LoginContext.jsx # Persistencia + sync pestañas
 ```
 
-## Base de datos — 13 tablas
+## Notas técnicas
+- `backend/db.js` soporta `DB_PASSWORD` env y fallback automático `''` → `'1234'` para evitar `500 ER_ACCESS_DENIED` en diferentes PCs.
+- Swiper flechas reducidas a `34px` circulares (`swiper.css`) para no tapar cards; imágenes con fallback `huanuco.jpg`/`banner.png` si `imagen` es `null`.
+- CORS `origin: http://localhost:5173`
 
-| Tabla | Registros demo | Descripción |
-|-------|---------------|-------------|
-| `usuarios` | 8 | Ciudadanos registrados |
-| `admins` | 3 | Administradores del sistema |
-| `municipalidades` | 3 | Huánuco, Amarilis, Pillco Marca |
-| `categorias_reporte` | 8 | Infraestructura, limpieza, seguridad... |
-| `reportes` | 11 | Reportes ciudadanos con ubicación GPS |
-| `noticias` | 8 | Publicaciones de admins |
-| `destacados` | 5 | Contenido destacado por municipio |
-| `preguntas_frecuentes` | 5 | Preguntas frecuentes |
-| `slider_imagenes` | 7 | Imágenes de carruseles |
-| `comentarios` | 8 | Comentarios en reportes y noticias |
-| `notificaciones` | 6 | Avisos de cambio de estado |
-| `historial_estados` | 7 | Tracking de cambios de estado |
-| `auditoria` | 6 | Log de operaciones CRUD |
-
-## Datos de prueba
-
-### Usuarios (correo / contraseña)
-
-| Nombre | Correo | Contraseña |
-|--------|--------|-----------|
-| Ana García | ana.garcia@demo.com | ana1234 |
-| José Pérez | jose.perez@demo.com | jose123 |
-| María Flores | maria.flores@demo.com | maria123 |
-| Luis Cruz | luis.cruz@demo.com | luis123 |
-| Rosa Huamán | rosa.huaman@demo.com | rosa123 |
-| Pedro Sánchez | pedro.sanchez@demo.com | pedro123 |
-| Carmen Quispe | carmen.quispe@demo.com | carmen123 |
-| Juan Torres | juan.torres@demo.com | juan123 |
-
-### Administradores
-
-| Nombre | Correo | Contraseña | Tipo |
-|--------|--------|-----------|------|
-| Carlos Mendoza | admin@demo.com | admin123 | superadmin |
-| Lucía Torres | lucia.torres@demo.com | lucia123 | editor |
-| Miguel Ríos | miguel.rios@demo.com | miguel123 | admin |
-
-## Solución de problemas
-
-### "Access denied for user 'root'@'localhost'"
-
-```bash
-# Linux
-sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED VIA mysql_native_password USING PASSWORD('');"
-sudo mysql -e "FLUSH PRIVILEGES;"
-
-# Windows — abrir MySQL Command Line Client como administrador
-mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED VIA mysql_native_password USING PASSWORD('');"
-mysql -u root -e "FLUSH PRIVILEGES;"
-```
-
-### "ER_DUP_ENTRY" al ejecutar seed
-
-Los datos ya existen. Ejecuta:
-
-```bash
-npm run seed   # limpia y vuelve a insertar automáticamente
-```
-
-### "Cannot find module" al ejecutar migrate
-
-Asegúrate de haber instalado las dependencias:
-
-```bash
-cd backend && npm install
-```
-
-### Puerto 4000 o 5173 en uso
-
-```bash
-# Linux — encontrar y matar el proceso
-lsof -i :4000
-kill -9 <PID>
-
-# Windows
-netstat -ano | findstr :4000
-taskkill /PID <PID> /F
-```
-
-### MariaDB no inicia
-
-```bash
-# Linux
-sudo systemctl status mariadb
-sudo systemctl restart mariadb
-
-# Windows — reiniciar servicio desde Services (services.msc)
-```
+## Autor
+Rama `zaid` - ZaidNM - Alertas_Muni
