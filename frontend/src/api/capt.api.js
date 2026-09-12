@@ -34,3 +34,8 @@ export const captSliderRequest = async (section) => {
 export const captReportesMapaRequest = async () => {
     return await axios.get('http://localhost:4000/capt/reportes/mapa')
 }
+
+// FIX FORMULARIO: Endpoints para formulario con geolocalización del dispositivo
+export const getMunicipalidadesRequest = async () => axios.get('http://localhost:4000/reportes/municipalidades')
+export const getCategoriasRequest = async () => axios.get('http://localhost:4000/reportes/categorias')
+export const createReporteRequest = async (data) => axios.post('http://localhost:4000/reportes', data)
